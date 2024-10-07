@@ -41,6 +41,10 @@ function drawPredictions(predictions) {
     ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
     ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
     
+    // Limpar a lista de objetos detectados
+    const detectedObjectsDiv = document.getElementById('detectedObjects');
+    detectedObjectsDiv.innerHTML = ""; // Limpa a lista anterior
+    
     predictions.forEach(prediction => {
         // Exibir feedback visual para objetos detectados
         ctx.beginPath();
@@ -51,8 +55,12 @@ function drawPredictions(predictions) {
         ctx.stroke();
         ctx.fillText(prediction.class, prediction.bbox[0], prediction.bbox[1] > 10 ? prediction.bbox[1] - 5 : 10);
         
+        // Adicionar o objeto detectado à lista
+        const objectName = prediction.class.toLowerCase();
+        detectedObjectsDiv.innerHTML += `<div>Detectado: ${objectName}</div>`;
+        
         // Verifica se o objeto detectado é o correto para a fase atual
-        if (isCorrectObject(prediction.class)) {
+        if (isCorrectObject(objectName)) {
             goToNextPhase(); // Avança para a próxima fase se o objeto correto for detectado
         }
     });
@@ -77,7 +85,7 @@ function isCorrectObject(detectedObject) {
         ["frame", "poster", "picture"]
     ];
 
-    return expectedObjects[currentPhase].some(obj => obj.toLowerCase() === detectedObject.toLowerCase());
+    return expectedObjects[currentPhase].some(obj => obj.toLowerCase() === detectedObject);
 }
 
 // Função para mudar para a próxima fase
