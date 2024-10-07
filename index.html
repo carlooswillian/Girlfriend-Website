@@ -1,38 +1,38 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Caça ao Tesouro</title>
     <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div id="app">
-        <div id="intro" class="active">
-            <h1>Caça ao Tesouro</h1>
-            <button id="startBtn">Iniciar</button>
-        </div>
-
-        <div id="clue" class="hidden">
-            <h2>Fase 1: Histórias</h2>
-            <p>Neles estão muitas lembranças que tivemos, momentos marcantes que amei viver com você.</p>
-        </div>
-
-        <div id="scan" class="hidden">
-            <video id="webcam" playsinline autoplay></video>
-            <canvas id="outputCanvas" width="640" height="480"></canvas>
-            <button id="scanBtn">Escanear Objeto</button>
-            <div id="feedback" class="feedback"></div> <!-- Adicionando feedback aqui -->
-        </div>
-
-        <div id="gift" class="hidden">
-            <h2>Surpresa!</h2>
-            <button id="revealGiftBtn">Ver Presente</button>
-        </div>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+</head>
+<body>
+    <div id="intro" class="screen active">
+        <h1>Caça ao Tesouro do Amor</h1>
+        <p>Vamos começar essa jornada especial?</p>
+        <button id="startBtn">Iniciar</button>
+    </div>
+
+    <div id="clue" class="screen">
+        <h2></h2>
+        <p></p>
+        <button id="scanBtn">Escanear Objeto</button>
+    </div>
+
+    <div id="scan" class="screen">
+        <video id="webcam" autoplay playsinline></video>
+        <canvas id="outputCanvas"></canvas>
+        <p>Abrindo câmera para escanear...</p>
+    </div>
+
+    <div id="gift" class="screen">
+        <h2>Fim da Jornada!</h2>
+        <p>"Te amo mais do que as palavras podem expressar. Você é o meu tesouro."</p>
+        <button id="revealGiftBtn">Abrir Presente</button>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
