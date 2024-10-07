@@ -5,41 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Caça ao Tesouro</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
 </head>
 <body>
-
-    <!-- Página de introdução -->
-    <div id="intro" class="active">
-        <h1>Bem-vinda ao Caça ao Tesouro</h1>
-        <p>Clique no botão abaixo para iniciar a aventura!</p>
+    <div id="intro" class="screen active">
+        <h1>Caça ao Tesouro do Amor</h1>
+        <p>Vamos começar essa jornada especial?</p>
         <button id="startBtn">Iniciar</button>
     </div>
 
-    <!-- Página da fase com a dica -->
-    <div id="clue">
-        <h2>Fase 1</h2>
+    <div id="clue" class="screen">
+        <h2></h2>
         <p></p>
         <button id="scanBtn">Escanear Objeto</button>
     </div>
 
-    <!-- Página de escaneamento -->
-    <div id="scan">
-        <video id="webcam" autoplay></video>
+    <div id="scan" class="screen">
+        <video id="webcam" autoplay playsinline></video>
         <canvas id="outputCanvas"></canvas>
-
-        <!-- Feedback do objeto detectado -->
-        <div id="feedback">Nenhum objeto detectado.</div>
+        <p>Abrindo câmera para escanear...</p>
     </div>
 
-    <!-- Página de presente -->
-    <div id="gift">
-        <h2>Parabéns!</h2>
-        <p>Você completou todas as fases!</p>
-        <button id="revealGiftBtn">Desbloquear presente</button>
+    <div id="gift" class="screen">
+        <h2>Fim da Jornada!</h2>
+        <p>"Te amo mais do que as palavras podem expressar. Você é o meu tesouro."</p>
+        <button id="revealGiftBtn">Abrir Presente</button>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
     <script src="script.js"></script>
 </body>
 </html>
