@@ -48,3 +48,15 @@ video {
     width: 100%;
     height: auto;
 }
+
+#feedback {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 18px;
+    z-index: 1000; /* Certifica-se de que apareça acima de tudo */
+}
