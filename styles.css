@@ -1,49 +1,32 @@
-* {
-    box-sizing: border-box;
-}
-
 body {
     font-family: Arial, sans-serif;
+    margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    margin: 0;
-    background-color: #f8f9fa; /* Cor de fundo clara para contraste */
+    background-color: #f0f0f0;
 }
 
-.page {
-    text-align: center;
+#intro, #hint, #scanner {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centraliza horizontalmente */
-    justify-content: center; /* Centraliza verticalmente */
-    width: 100%; /* Largura total para todas as páginas */
+    align-items: center;
 }
 
-h1, h2 {
-    margin: 0; /* Remove margem para melhor centralização */
-}
-
-button {
-    margin-top: 20px; /* Espaçamento entre o título e o botão */
-    padding: 10px 20px; /* Estilo do botão */
-    font-size: 16px; /* Tamanho da fonte do botão */
-    cursor: pointer; /* Muda o cursor ao passar sobre o botão */
-}
-
-video {
-    width: 100vw; /* Para ocupar toda a largura */
-    height: 100vh; /* Para ocupar toda a altura */
-    object-fit: cover; /* Manter a proporção */
-}
-
-canvas {
-    display: none; /* Ocultar inicialmente */
+#video {
+    width: 100%; /* Ajuste a largura da câmera para ocupar 100% da tela */
+    height: auto; /* A altura se ajusta automaticamente */
 }
 
 #detectedObject {
-    margin-top: 10px;
-    font-size: 20px;
+    position: absolute;
+    top: 10px; /* Distância do topo da tela */
+    left: 10px; /* Distância da esquerda da tela */
+    color: white; /* Cor do texto */
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+    padding: 10px; /* Espaçamento interno */
+    border-radius: 5px; /* Bordas arredondadas */
+    z-index: 2; /* Garante que o texto fique acima do vídeo */
 }
