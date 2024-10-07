@@ -28,11 +28,21 @@ scanBtn.addEventListener('click', async () => {
 // Função para detectar objetos
 async function detectFrame(model) {
     const predictions = await model.detect(video);
-    // Aqui você pode implementar a lógica de detecção do objeto
+
+    // Limpa o conteúdo anterior
+    detectedObject.innerHTML = "";
+
+    // Verifica se há detecções
     if (predictions.length > 0) {
-        detectedObject.innerText = `Objeto detectado: ${predictions[0].class}`;
+        predictions.forEach(prediction => {
+            // Cria um parágrafo para cada detecção
+            const p = document.createElement('p');
+            p.innerText = `Objeto detectado: ${prediction.class} - Confiança: ${(prediction.score * 100).toFixed(2)}%`;
+            detectedObject.appendChild(p);
+        });
     } else {
         detectedObject.innerText = "Nenhum objeto detectado.";
     }
+
     requestAnimationFrame(() => detectFrame(model));
 }
