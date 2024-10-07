@@ -48,17 +48,21 @@ async function detectObjects() {
     
     predictionsList.innerHTML = ''; // Limpa a lista de detecções
 
+    let objectDetected = false; // Variável para rastrear se o objeto específico foi detectado
+
     predictions.forEach(prediction => {
         const listItem = document.createElement('li');
         listItem.textContent = `${prediction.class}: ${Math.round(prediction.score * 100)}%`;
         predictionsList.appendChild(listItem); // Adiciona à lista de detecções
 
-        if (prediction.class === 'fridge' && !detectionMessage.innerText) {
+        // Verifica se o objeto detectado é a geladeira
+        if (prediction.class === 'fridge' && !objectDetected) {
+            objectDetected = true; // Marca que o objeto foi detectado
             detectionMessage.innerText = 'Objeto detectado! Você passou para a próxima fase.';
             setTimeout(() => {
                 nextPhase(); // Muda para a próxima fase
             }, 2000); // Mudar de fase após 2 segundos
-        } else if (prediction.class !== 'fridge') {
+        } else if (!objectDetected) {
             detectionMessage.innerText = 'Tente escanear novamente.';
         }
     });
