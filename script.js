@@ -16,8 +16,8 @@ scanBtn.addEventListener('click', async () => {
     hintPage.style.display = 'none';
     scannerPage.style.display = 'block';
 
-    // Iniciar a câmera
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    // Iniciar a câmera traseira
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" } } });
     video.srcObject = stream;
 
     // Carregar o modelo de detecção
