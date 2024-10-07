@@ -1,32 +1,44 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
+    padding: 0;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f2f2f2;
+}
+
+.screen {
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    background-color: #f0f0f0;
+    text-align: center;
 }
 
-#intro, #hint, #scanner {
+.active {
     display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
-#video {
-    width: 100%; /* Ajuste a largura da câmera para ocupar 100% da tela */
-    height: auto; /* A altura se ajusta automaticamente */
+button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-#detectedObject {
-    position: absolute;
-    top: 10px; /* Distância do topo da tela */
-    left: 10px; /* Distância da esquerda da tela */
-    color: white; /* Cor do texto */
-    background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
-    padding: 10px; /* Espaçamento interno */
-    border-radius: 5px; /* Bordas arredondadas */
-    z-index: 2; /* Garante que o texto fique acima do vídeo */
+button:hover {
+    background-color: #45a049;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+#outputCanvas {
+    display: none; /* O canvas será usado para processar a imagem da câmera */
 }
