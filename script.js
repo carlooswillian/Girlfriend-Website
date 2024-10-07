@@ -1,10 +1,11 @@
 let videoElement = document.getElementById('webcam');
+let videoPlayer = document.getElementById('videoPlayer');
 let predictionsList = document.getElementById('predictionsList');
 let detectionMessage = document.getElementById('detectionMessage');
-let isModelLoaded = false;
 let model;
+let isProcessing = false; // Variável de controle para interromper o processamento de imagens durante a reprodução do vídeo
 
-// Função para abrir a câmera traseira
+// Função para acessar a câmera do celular
 async function startWebcam() {
     try {
         const constraints = {
@@ -24,57 +25,83 @@ async function startWebcam() {
     }
 }
 
-// Função para carregar o modelo do TensorFlow.js
+// Função para carregar o modelo MobileNet
 async function loadTensorFlowModel() {
     try {
-        model = await cocoSsd.load(); // Carregando o modelo COCO-SSD
-        isModelLoaded = true; // Marcar o modelo como carregado
+        model = await mobilenet.load(); // Carregando o modelo MobileNet
         console.log("Modelo carregado com sucesso.");
-        detectObjects();
+        processFrame(); // Começa o processamento de frames
     } catch (error) {
         console.error('Erro ao carregar o modelo:', error);
         alert('Erro ao carregar o modelo. Tente novamente.');
     }
 }
 
-// Função para detectar objetos
-async function detectObjects() {
-    if (!isModelLoaded) {
-        console.log("Modelo ainda não carregado.");
-        return;
-    }
+// Função para processar os frames da câmera
+function processFrame() {
+    if (isProcessing) return; // Se estiver processando um vídeo, interrompe a detecção
 
-    const predictions = await model.detect(videoElement);
-    
-    predictionsList.innerHTML = ''; // Limpa a lista de detecções
+    // Cria um canvas temporário para capturar frames da câmera
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    canvas.width = videoElement.videoWidth;
+    canvas.height = videoElement.videoHeight;
+    context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
 
-    let objectDetected = false; // Variável para rastrear se o objeto específico foi detectado
+    // Processa o frame da câmera com o modelo MobileNet
+    const imageTensor = tf.browser.fromPixels(canvas);
+    model.classify(imageTensor).then(predictions => {
+        if (predictions && predictions.length > 0) {
+            predictionsList.innerHTML = ''; // Limpa a lista de detecções
+            let objectDetected = false; // Variável para verificar se um objeto específico foi detectado
 
-    predictions.forEach(prediction => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${prediction.class}: ${Math.round(prediction.score * 100)}%`;
-        predictionsList.appendChild(listItem); // Adiciona à lista de detecções
+            predictions.forEach(prediction => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${prediction.className}: ${Math.round(prediction.probability * 100)}%`;
+                predictionsList.appendChild(listItem); // Adiciona à lista de detecções
 
-        // Verifica se o objeto detectado é a geladeira
-        if (prediction.class === 'fridge' && !objectDetected) {
-            objectDetected = true; // Marca que o objeto foi detectado
-            detectionMessage.innerText = 'Objeto detectado! Você passou para a próxima fase.';
-            setTimeout(() => {
-                nextPhase(); // Muda para a próxima fase
-            }, 2000); // Mudar de fase após 2 segundos
-        } else if (!objectDetected) {
-            detectionMessage.innerText = 'Tente escanear novamente.';
+                // Verifica se a classe identificada corresponde a algum vídeo na lista
+                if (videoLinks[prediction.className.toLowerCase().replace(/\s+/g, '_')]) {
+                    objectDetected = true; // Marca que o objeto foi detectado
+                    isProcessing = true; // Pausa a detecção de novas imagens
+                    playVideo(videoLinks[prediction.className.toLowerCase().replace(/\s+/g, '_')]);
+                }
+            });
+
+            if (!objectDetected) {
+                detectionMessage.innerText = 'Tente escanear novamente.';
+            } else {
+                detectionMessage.innerText = 'Objeto detectado! Preparando para reproduzir o vídeo.';
+            }
         }
+        imageTensor.dispose(); // Libera memória do tensor
     });
 
-    requestAnimationFrame(detectObjects); // Chamando a função novamente para continuar detectando
+    // Executa a cada 500ms para verificar a imagem da câmera
+    setTimeout(processFrame, 500);
+}
+
+// Função para reproduzir o vídeo
+function playVideo(link) {
+    videoElement.style.display = 'none';
+    videoPlayer.style.display = 'block';
+    videoPlayer.src = link;
+    videoPlayer.play();
+
+    // Volta ao início quando o vídeo acabar
+    videoPlayer.onended = () => {
+        videoPlayer.style.display = 'none';
+        videoElement.style.display = 'block';
+        isProcessing = false; // Retoma a detecção de imagens após o vídeo
+        videoElement.play();
+        processFrame(); // Reinicia a detecção
+    };
 }
 
 // Função para avançar para a próxima fase
 function nextPhase() {
     document.getElementById('scan').classList.remove('active');
     document.getElementById('clue').classList.add('active');
-    // Altere o texto da pista para a próxima fase se necessário
 }
 
 // Eventos
