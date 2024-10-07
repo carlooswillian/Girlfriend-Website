@@ -1,117 +1,122 @@
+let videoElement = document.getElementById('webcam');
+let canvasElement = document.getElementById('outputCanvas');
+let ctx = canvasElement.getContext('2d');
 let model;
 let currentPhase = 0;
-const phases = [
-    {
-        title: "Fase 1: Histórias",
-        clue: "Neles estão muitas lembranças que tivemos, momentos marcantes que amei viver com você.",
-        objects: ['Livro', 'Álbum de fotos', 'Caderno'],
-        surprise: "video1.mp4"
-    },
-    {
-        title: "Fase 2: Tempo de Qualidade",
-        clue: "Eu amo sempre estar com você, não importa o que estejamos fazendo mas o importante é estar com você, passamos nosso tempo de qualidade usando este objeto.",
-        objects: ['Televisão', 'TV', 'Monitor'],
-        surprise: "audio1.mp3"
-    },
-    {
-        title: "Fase 3: Entrada no meu Coração",
-        clue: "Você sabe que mora no meu coração, você é a pessoa mais incrível deste mundo, com este objeto você não abre meu coração mas é usado para abrir, uma grande conquista esse ano.",
-        objects: ['Chave', 'Chaves'],
-        surprise: "photo1.jpg"
-    },
-    {
-        title: "Fase 4: Sonho com você sempre",
-        clue: "Quando o dia termina, aqui é onde encontramos paz e descanso, o nosso refúgio e de bons momentos juntos.",
-        objects: ['Cama', 'Travesseiro', 'Coberta', 'Lençol'],
-        surprise: "video2.mp4"
-    },
-    {
-        title: "Fase 5: Momentos Marcantes",
-        clue: "Olhamos para isso todos os dias e podemos nos lembrar de um dia inesquecível.",
-        objects: ['Quadro', 'Foto', 'Pôster'],
-        surprise: "message"
-    }
-];
 
-// Função para carregar o modelo
+// Carregar o modelo COCO-SSD
 async function loadModel() {
     model = await cocoSsd.load();
     console.log("Modelo carregado!");
 }
 
-// Função para iniciar a webcam
-function startWebcam() {
-    const webcamElement = document.getElementById('webcam');
-    navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'environment' }
-    }).then(function(stream) {
-        webcamElement.srcObject = stream;
-    });
+// Função para abrir a câmera em tela cheia 9:16
+async function startWebcam() {
+    try {
+        const constraints = {
+            video: {
+                facingMode: { exact: "environment" }, // Usa a câmera traseira
+                aspectRatio: 9 / 16
+            }
+        };
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        videoElement.srcObject = stream;
+        videoElement.play();
+        detectObjects(); // Iniciar detecção de objetos após a câmera ser aberta
+    } catch (err) {
+        console.error('Erro ao abrir a câmera:', err);
+    }
 }
 
-// Função para iniciar a detecção
-function detectObjects() {
-    const video = document.getElementById('webcam');
-    model.detect(video).then(predictions => {
-        displayFeedback(predictions);
-    });
+// Função para detectar objetos
+async function detectObjects() {
+    ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
+    const predictions = await model.detect(videoElement);
+    drawPredictions(predictions);
+    requestAnimationFrame(detectObjects); // Chama a função novamente para continuar a detecção
 }
 
-// Função para exibir o feedback dos objetos detectados
-function displayFeedback(predictions) {
-    const feedbackElement = document.getElementById('feedback');
-    const detectedObjects = predictions.map(prediction => prediction.class);
+// Função para desenhar as previsões na tela
+function drawPredictions(predictions) {
+    ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+    ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
     
-    const phaseObjects = phases[currentPhase].objects.map(obj => obj.toLowerCase());
-    const match = detectedObjects.some(detected => phaseObjects.includes(detected.toLowerCase()));
-
-    if (match) {
-        feedbackElement.innerText = "Objeto correto detectado!";
-        setTimeout(() => {
-            moveToNextPhase();
-        }, 1000);
-    } else {
-        feedbackElement.innerText = `Objetos detectados: ${detectedObjects.join(', ')}`;
-        setTimeout(detectObjects, 1000); // Continuar detectando
-    }
+    predictions.forEach(prediction => {
+        // Exibir feedback visual para objetos detectados
+        ctx.beginPath();
+        ctx.rect(prediction.bbox[0], prediction.bbox[1], prediction.bbox[2], prediction.bbox[3]);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "red";
+        ctx.fillStyle = "red";
+        ctx.stroke();
+        ctx.fillText(prediction.class, prediction.bbox[0], prediction.bbox[1] > 10 ? prediction.bbox[1] - 5 : 10);
+        
+        // Verifica se o objeto detectado é o correto para a fase atual
+        if (isCorrectObject(prediction.class)) {
+            goToNextPhase(); // Avança para a próxima fase se o objeto correto for detectado
+        }
+    });
 }
 
-// Função para ir para a próxima fase
-function moveToNextPhase() {
+// Verifica se o objeto detectado é o correto para a fase atual
+function isCorrectObject(detectedObject) {
+    const expectedObjects = [
+        // Fase 1: Histórias
+        ["book", "photo album", "notebook"],
+
+        // Fase 2: Tempo de Qualidade
+        ["tv", "monitor"],
+
+        // Fase 3: Entrada no meu Coração
+        ["key"],
+
+        // Fase 4: Sonho com você sempre
+        ["bed", "pillow"],
+
+        // Fase 5: Momentos Marcantes
+        ["frame", "poster", "picture"]
+    ];
+
+    return expectedObjects[currentPhase].some(obj => obj.toLowerCase() === detectedObject.toLowerCase());
+}
+
+// Função para mudar para a próxima fase
+function goToNextPhase() {
     currentPhase++;
-    if (currentPhase < phases.length) {
-        updateClue();
-    } else {
-        endGame();
+    if (currentPhase >= 5) {
+        document.getElementById('gift').classList.add('active');
+        document.getElementById('scan').classList.remove('active');
+        videoElement.style.display = 'none'; // Esconde o vídeo
+        return;
     }
+    document.getElementById('clue').querySelector('h2').innerText = `Fase ${currentPhase + 1}`;
+    document.getElementById('clue').querySelector('p').innerText = "Nova dica aqui."; // Atualize a mensagem da dica conforme necessário
+    document.getElementById('clue').classList.add('active');
+    document.getElementById('scan').classList.remove('active');
 }
 
-// Atualizar a dica com base na fase atual
-function updateClue() {
-    const phase = phases[currentPhase];
-    document.getElementById('clue').querySelector('h2').innerText = phase.title;
-    document.getElementById('clue').querySelector('p').innerText = phase.clue;
-}
-
-// Função para terminar o jogo
-function endGame() {
-    document.getElementById('clue').innerHTML = "<h2>Te amo mais do que as palavras podem expressar. Você é o meu tesouro.</h2>";
-}
-
-// Evento para o botão "Iniciar"
+// Eventos de clique
 document.getElementById('startBtn').addEventListener('click', function() {
     document.getElementById('intro').classList.remove('active');
     document.getElementById('clue').classList.add('active');
-    currentPhase = 0; // Iniciar da fase 1
-    updateClue();
+    
+    // Atualizar a mensagem da fase 1 imediatamente
+    currentPhase = 0; // Reinicia a fase
+    document.getElementById('clue').querySelector('h2').innerText = "Fase 1: Histórias";
+    document.getElementById('clue').querySelector('p').innerText = "Neles estão muitas lembranças que tivemos, momentos marcantes que amei viver com você."; // Atualize conforme necessário
+    
+    loadModel().then(() => {
+        // Começar a detecção de objetos depois que o modelo estiver carregado
+        startWebcam();
+    });
 });
 
-// Evento para o botão "Escanear Objeto"
 document.getElementById('scanBtn').addEventListener('click', function() {
     document.getElementById('clue').classList.remove('active');
-    document.getElementById('camera').classList.add('active');
-    loadModel().then(() => {
-        startWebcam();
-        detectObjects();
-    });
+    document.getElementById('scan').classList.add('active');
+});
+
+// Evento para abrir o presente ao completar todas as fases
+document.getElementById('revealGiftBtn').addEventListener('click', function() {
+    alert("Você ganhou um dia de princesa ♡");
 });
