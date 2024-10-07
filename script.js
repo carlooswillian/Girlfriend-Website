@@ -41,6 +41,8 @@ function drawPredictions(predictions) {
     ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
     ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
     
+    let detectedObjects = []; // Armazenar objetos detectados
+
     predictions.forEach(prediction => {
         // Exibir feedback visual para objetos detectados
         ctx.beginPath();
@@ -51,11 +53,17 @@ function drawPredictions(predictions) {
         ctx.stroke();
         ctx.fillText(prediction.class, prediction.bbox[0], prediction.bbox[1] > 10 ? prediction.bbox[1] - 5 : 10);
         
+        // Adiciona o objeto detectado à lista
+        detectedObjects.push(prediction.class);
+        
         // Verifica se o objeto detectado é o correto para a fase atual
         if (isCorrectObject(prediction.class)) {
             goToNextPhase(); // Avança para a próxima fase se o objeto correto for detectado
         }
     });
+    
+    // Atualiza o feedback com os objetos detectados
+    document.getElementById('feedback').innerText = `Objetos detectados: ${detectedObjects.join(', ')}`;
 }
 
 // Verifica se o objeto detectado é o correto para a fase atual
