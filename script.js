@@ -42,12 +42,7 @@ function drawPredictions(predictions) {
     ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
     
     predictions.forEach(prediction => {
-        if (isCorrectObject(prediction.class)) {
-            // Se o objeto correto foi detectado
-            goToNextPhase();
-        }
-        
-        // Desenhar o retângulo ao redor do objeto detectado
+        // Exibir feedback visual para objetos detectados
         ctx.beginPath();
         ctx.rect(prediction.bbox[0], prediction.bbox[1], prediction.bbox[2], prediction.bbox[3]);
         ctx.lineWidth = 2;
@@ -55,6 +50,11 @@ function drawPredictions(predictions) {
         ctx.fillStyle = "red";
         ctx.stroke();
         ctx.fillText(prediction.class, prediction.bbox[0], prediction.bbox[1] > 10 ? prediction.bbox[1] - 5 : 10);
+        
+        // Verifica se o objeto detectado é o correto para a fase atual
+        if (isCorrectObject(prediction.class)) {
+            goToNextPhase(); // Avança para a próxima fase se o objeto correto for detectado
+        }
     });
 }
 
@@ -77,7 +77,7 @@ function isCorrectObject(detectedObject) {
         ["frame", "poster", "picture"]
     ];
 
-    return expectedObjects[currentPhase].some(obj => obj === detectedObject);
+    return expectedObjects[currentPhase].some(obj => obj.toLowerCase() === detectedObject.toLowerCase());
 }
 
 // Função para mudar para a próxima fase
@@ -100,7 +100,9 @@ document.getElementById('startBtn').addEventListener('click', function() {
     document.getElementById('intro').classList.remove('active');
     document.getElementById('clue').classList.add('active');
     loadModel().then(() => {
-        goToNextPhase();
+        // Carregou o modelo, agora mostre a primeira fase
+        document.getElementById('clue').querySelector('h2').innerText = "Fase 1: Histórias";
+        document.getElementById('clue').querySelector('p').innerText = "Neles estão muitas lembranças que tivemos, momentos marcantes que amei viver com você."; // Atualize conforme necessário
     });
 });
 
