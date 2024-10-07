@@ -1,6 +1,14 @@
 let videoElement = document.getElementById('webcam');
-let isModelLoaded = false;
+let canvasElement = document.getElementById('outputCanvas');
+let ctx = canvasElement.getContext('2d');
+let model;
 let currentPhase = 0;
+
+// Carregar o modelo COCO-SSD
+async function loadModel() {
+    model = await cocoSsd.load();
+    console.log("Modelo carregado!");
+}
 
 // Função para abrir a câmera em tela cheia 9:16
 async function startWebcam() {
@@ -14,55 +22,75 @@ async function startWebcam() {
         const stream = await navigator.mediaDevices.getUserMedia(constraints);
         videoElement.srcObject = stream;
         videoElement.play();
-        isModelLoaded = true; // Supondo que o modelo será carregado após isso
-
-        // Chama a função de detecção de objetos
-        detectObjects();
+        detectObjects(); // Iniciar detecção de objetos após a câmera ser aberta
     } catch (err) {
         console.error('Erro ao abrir a câmera:', err);
     }
 }
 
-// Função para detectar objetos (Simulação)
-function detectObjects() {
-    // Aqui você deve implementar a lógica de detecção usando TensorFlow.js
-    // Por enquanto, vamos simular a detecção após alguns segundos
-    setTimeout(() => {
-        // Suponha que o objeto correto foi detectado
-        goToNextPhase();
-    }, 3000); // Simulando detecção após 3 segundos
+// Função para detectar objetos
+async function detectObjects() {
+    ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
+    const predictions = await model.detect(videoElement);
+    drawPredictions(predictions);
+    requestAnimationFrame(detectObjects); // Chama a função novamente para continuar a detecção
+}
+
+// Função para desenhar as previsões na tela
+function drawPredictions(predictions) {
+    ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+    ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
+    
+    predictions.forEach(prediction => {
+        if (isCorrectObject(prediction.class)) {
+            // Se o objeto correto foi detectado
+            goToNextPhase();
+        }
+        
+        // Desenhar o retângulo ao redor do objeto detectado
+        ctx.beginPath();
+        ctx.rect(prediction.bbox[0], prediction.bbox[1], prediction.bbox[2], prediction.bbox[3]);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "red";
+        ctx.fillStyle = "red";
+        ctx.stroke();
+        ctx.fillText(prediction.class, prediction.bbox[0], prediction.bbox[1] > 10 ? prediction.bbox[1] - 5 : 10);
+    });
+}
+
+// Verifica se o objeto detectado é o correto para a fase atual
+function isCorrectObject(detectedObject) {
+    const expectedObjects = [
+        // Fase 1: Histórias
+        ["book", "photo album", "notebook"],
+
+        // Fase 2: Tempo de Qualidade
+        ["tv", "monitor"],
+
+        // Fase 3: Entrada no meu Coração
+        ["key"],
+
+        // Fase 4: Sonho com você sempre
+        ["bed", "pillow"],
+
+        // Fase 5: Momentos Marcantes
+        ["frame", "poster", "picture"]
+    ];
+
+    return expectedObjects[currentPhase].some(obj => obj === detectedObject);
 }
 
 // Função para mudar para a próxima fase
 function goToNextPhase() {
     currentPhase++;
-    switch (currentPhase) {
-        case 1:
-            document.getElementById('clue').querySelector('h2').innerText = "Fase 1: Histórias";
-            document.getElementById('clue').querySelector('p').innerText = "Neles estão muitas lembranças que tivemos, momentos marcantes que amei viver com você.";
-            break;
-        case 2:
-            document.getElementById('clue').querySelector('h2').innerText = "Fase 2: Tempo de Qualidade";
-            document.getElementById('clue').querySelector('p').innerText = "Eu amo sempre estar com você, não importa o que estejamos fazendo mas o importante é estar com você, passamos nosso tempo de qualidade usando este objeto.";
-            break;
-        case 3:
-            document.getElementById('clue').querySelector('h2').innerText = "Fase 3: Entrada no meu Coração";
-            document.getElementById('clue').querySelector('p').innerText = "Você sabe que mora no meu coração, você é a pessoa mais incrível deste mundo, com este objeto você não abre meu coração mas é usado para abrir.";
-            break;
-        case 4:
-            document.getElementById('clue').querySelector('h2').innerText = "Fase 4: Sonho com você sempre";
-            document.getElementById('clue').querySelector('p').innerText = "Quando o dia termina, aqui é onde encontramos paz e descanso, o nosso refúgio e de bons momentos juntos.";
-            break;
-        case 5:
-            document.getElementById('clue').querySelector('h2').innerText = "Fase 5: Momentos Marcantes";
-            document.getElementById('clue').querySelector('p').innerText = "Olhamos para isso todos os dias e podemos nos lembrar de um dia inesquecível.";
-            break;
-        case 6:
-            document.getElementById('gift').classList.add('active');
-            document.getElementById('scan').classList.remove('active');
-            videoElement.style.display = 'none'; // Esconde o vídeo
-            return;
+    if (currentPhase >= 5) {
+        document.getElementById('gift').classList.add('active');
+        document.getElementById('scan').classList.remove('active');
+        videoElement.style.display = 'none'; // Esconde o vídeo
+        return;
     }
+    document.getElementById('clue').querySelector('h2').innerText = `Fase ${currentPhase + 1}`;
+    document.getElementById('clue').querySelector('p').innerText = "Nova dica aqui."; // Atualize a mensagem da dica conforme necessário
     document.getElementById('clue').classList.add('active');
     document.getElementById('scan').classList.remove('active');
 }
@@ -71,7 +99,9 @@ function goToNextPhase() {
 document.getElementById('startBtn').addEventListener('click', function() {
     document.getElementById('intro').classList.remove('active');
     document.getElementById('clue').classList.add('active');
-    goToNextPhase();
+    loadModel().then(() => {
+        goToNextPhase();
+    });
 });
 
 document.getElementById('scanBtn').addEventListener('click', function() {
