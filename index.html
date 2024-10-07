@@ -1,39 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caça ao Tesouro</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+    <title>Caça ao Tesouro</title>
 </head>
 <body>
-    <div id="intro" class="screen active">
-        <h1>Caça ao Tesouro do Amor</h1>
-        <p>Vamos começar essa jornada especial?</p>
+    <div id="intro">
+        <h1>Bem-vindo ao Caça ao Tesouro!</h1>
         <button id="startBtn">Iniciar</button>
     </div>
 
-    <div id="clue" class="screen">
-        <h2></h2>
-        <p></p>
+    <div id="phase1" class="phase" style="display:none;">
+        <h2>Fase 1: Histórias</h2>
+        <p>Pista: "Neles estão muitas lembranças que tivemos, momentos marcantes que amei viver com você."</p>
         <button id="scanBtn">Escanear Objeto</button>
+        <canvas id="outputCanvas" style="display: none;"></canvas>
+        <div id="detectedObjects" style="color: black; margin-top: 20px;"></div> <!-- Área para exibir detecções -->
     </div>
 
-    <div id="scan" class="screen">
-        <video id="webcam" autoplay playsinline></video>
-        <canvas id="outputCanvas"></canvas>
-        <div id="detectedObjects" style="color: black; margin-top: 20px;"></div>
-        <p>Abrindo câmera para escanear...</p>
+    <div id="nextPhase" class="phase" style="display:none;">
+        <h2>Próxima Fase!</h2>
+        <button id="nextBtn">Avançar</button>
     </div>
 
-    <div id="gift" class="screen">
-        <h2>Fim da Jornada!</h2>
-        <p>"Te amo mais do que as palavras podem expressar. Você é o meu tesouro."</p>
-        <button id="revealGiftBtn">Abrir Presente</button>
-    </div>
-
+    <<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
     <script src="script.js"></script>
 </body>
 </html>
