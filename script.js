@@ -37,7 +37,7 @@ async function detectFrame(model) {
         predictions.forEach(prediction => {
             // Cria um parágrafo para cada detecção
             const p = document.createElement('p');
-            p.innerText = `Objeto detectado: ${prediction.class} - Confiança: ${(prediction.score * 100).toFixed(2)}%`;
+            p.innerText = `Objeto detectado: ${prediction.class}`;
             detectedObject.appendChild(p);
         });
     } else {
