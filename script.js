@@ -17,6 +17,7 @@ async function startWebcam() {
         const stream = await navigator.mediaDevices.getUserMedia(constraints);
         videoElement.srcObject = stream;
         videoElement.play();
+        console.log("Câmera aberta com sucesso.");
     } catch (err) {
         console.error('Erro ao abrir a câmera:', err);
         alert('Erro ao abrir a câmera. Verifique as permissões do navegador.');
@@ -25,13 +26,21 @@ async function startWebcam() {
 
 // Função para carregar o modelo do TensorFlow.js
 async function loadTensorFlowModel() {
-    model = await cocoSsd.load(); // Carregando o modelo COCO-SSD
-    detectObjects();
+    try {
+        model = await cocoSsd.load(); // Carregando o modelo COCO-SSD
+        isModelLoaded = true; // Marcar o modelo como carregado
+        console.log("Modelo carregado com sucesso.");
+        detectObjects();
+    } catch (error) {
+        console.error('Erro ao carregar o modelo:', error);
+        alert('Erro ao carregar o modelo. Tente novamente.');
+    }
 }
 
 // Função para detectar objetos
 async function detectObjects() {
     if (!isModelLoaded) {
+        console.log("Modelo ainda não carregado.");
         return;
     }
 
