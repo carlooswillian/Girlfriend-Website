@@ -48,3 +48,9 @@ video {
     width: 100%;
     height: auto;
 }
+
+#detectedObjects {
+    color: white;
+    margin-top: 20px;
+    font-size: 18px; /* Ajuste o tamanho da fonte se necessário */
+}
