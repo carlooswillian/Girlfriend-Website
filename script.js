@@ -99,17 +99,21 @@ function goToNextPhase() {
 document.getElementById('startBtn').addEventListener('click', function() {
     document.getElementById('intro').classList.remove('active');
     document.getElementById('clue').classList.add('active');
+    
+    // Atualizar a mensagem da fase 1 imediatamente
+    currentPhase = 0; // Reinicia a fase
+    document.getElementById('clue').querySelector('h2').innerText = "Fase 1: Histórias";
+    document.getElementById('clue').querySelector('p').innerText = "Neles estão muitas lembranças que tivemos, momentos marcantes que amei viver com você."; // Atualize conforme necessário
+    
     loadModel().then(() => {
-        // Carregou o modelo, agora mostre a primeira fase
-        document.getElementById('clue').querySelector('h2').innerText = "Fase 1: Histórias";
-        document.getElementById('clue').querySelector('p').innerText = "Neles estão muitas lembranças que tivemos, momentos marcantes que amei viver com você."; // Atualize conforme necessário
+        // Começar a detecção de objetos depois que o modelo estiver carregado
+        startWebcam();
     });
 });
 
 document.getElementById('scanBtn').addEventListener('click', function() {
     document.getElementById('clue').classList.remove('active');
     document.getElementById('scan').classList.add('active');
-    startWebcam();
 });
 
 // Evento para abrir o presente ao completar todas as fases
