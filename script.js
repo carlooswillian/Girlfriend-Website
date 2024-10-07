@@ -1,5 +1,6 @@
 let videoElement = document.getElementById('webcam');
 let canvasElement = document.getElementById('outputCanvas');
+let predictionsList = document.getElementById('predictionsList');
 let isModelLoaded = false;
 let model;
 
@@ -16,10 +17,9 @@ async function startWebcam() {
         };
         const stream = await navigator.mediaDevices.getUserMedia(constraints);
         videoElement.srcObject = stream;
-        videoElement.style.display = 'block';  // Exibe o vídeo
         videoElement.play();
         
-        // Ajustando o estilo do vídeo para tela cheia
+        // Ajustando o estilo do vídeo para ocupar 50% da tela
         videoElement.style.position = "absolute";
         videoElement.style.top = "0";
         videoElement.style.left = "0";
@@ -42,9 +42,16 @@ async function loadTensorFlowModel() {
 // Função para detectar objetos
 async function detectObjects() {
     const predictions = await model.detect(videoElement);
+    
+    // Limpa a lista de detecções
+    predictionsList.innerHTML = '';
 
     // Lógica para verificar a detecção
     predictions.forEach(prediction => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${prediction.class}: ${Math.round(prediction.score * 100)}%`;
+        predictionsList.appendChild(listItem); // Adiciona à lista de detecções
+
         if (prediction.class === 'fridge' && !document.getElementById('detectionMessage').innerText) {
             document.getElementById('detectionMessage').innerText = 'Objeto detectado! Você passou para a próxima fase.';
             setTimeout(() => {
