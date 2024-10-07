@@ -1,29 +1,30 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caça ao Tesouro Virtual</title>
+    <title>Caça ao Tesouro</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="intro">
-        <h1>Bem-vindo ao Caça ao Tesouro!</h1>
+    <div id="intro" class="screen active">
+        <h1>Caça ao Tesouro do Amor</h1>
+        <p>Vamos começar essa jornada especial?</p>
         <button id="startBtn">Iniciar</button>
     </div>
 
-    <div id="hint" style="display:none;">
-        <h2 id="hintText"></h2>
-        <button id="scanBtn">Escanear objeto</button>
+    <div id="clue" class="screen">
+        <h2>Fase 1: Histórias</h2>
+        <p>"Neles estão muitas lembranças que tivemos, momentos marcantes que amei viver com você."</p>
+        <button id="scanBtn">Escanear Objeto</button>
     </div>
 
-    <div id="scanner" style="display:none;">
-        <video id="video" autoplay playsinline></video>
-        <div id="detectedObject"></div>
+    <div id="scan" class="screen">
+        <video id="webcam" autoplay playsinline style="display: none;"></video>
+        <canvas id="outputCanvas"></canvas>
+        <p>Abrindo câmera para escanear...</p>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
     <script src="script.js"></script>
 </body>
 </html>
