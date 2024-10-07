@@ -9,7 +9,7 @@ const detectedObject = document.getElementById('detectedObject');
 startBtn.addEventListener('click', () => {
     document.getElementById('intro').style.display = 'none';
     hintPage.style.display = 'block';
-    hintText.innerText = "Pista: [Insira a pista aqui]";
+    hintText.innerText = "Pista: Nela estão muitas lembranças que tivemos, momentos marcantes que amei viver com você.";
 });
 
 scanBtn.addEventListener('click', async () => {
