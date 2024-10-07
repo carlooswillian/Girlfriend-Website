@@ -5,13 +5,32 @@ let currentPhase = 0;
 // Função para abrir a câmera em tela cheia 9:16
 async function startWebcam() {
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: { aspectRatio: 9 / 16 } });
+        const constraints = {
+            video: {
+                facingMode: { exact: "environment" }, // Usa a câmera traseira
+                aspectRatio: 9 / 16
+            }
+        };
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
         videoElement.srcObject = stream;
         videoElement.play();
         isModelLoaded = true; // Supondo que o modelo será carregado após isso
+
+        // Chama a função de detecção de objetos
+        detectObjects();
     } catch (err) {
         console.error('Erro ao abrir a câmera:', err);
     }
+}
+
+// Função para detectar objetos (Simulação)
+function detectObjects() {
+    // Aqui você deve implementar a lógica de detecção usando TensorFlow.js
+    // Por enquanto, vamos simular a detecção após alguns segundos
+    setTimeout(() => {
+        // Suponha que o objeto correto foi detectado
+        goToNextPhase();
+    }, 3000); // Simulando detecção após 3 segundos
 }
 
 // Função para mudar para a próxima fase
@@ -59,16 +78,6 @@ document.getElementById('scanBtn').addEventListener('click', function() {
     document.getElementById('clue').classList.remove('active');
     document.getElementById('scan').classList.add('active');
     startWebcam();
-});
-
-// Adicionando o evento de detecção de objetos
-videoElement.addEventListener('loadeddata', function() {
-    if (isModelLoaded) {
-        // Aqui deve entrar a lógica de detecção usando TensorFlow.js
-        // A lógica de verificação deve ser implementada para passar de fase
-        // Quando o objeto correto for detectado:
-        goToNextPhase();
-    }
 });
 
 // Evento para abrir o presente ao completar todas as fases
