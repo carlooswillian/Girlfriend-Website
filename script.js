@@ -1,11 +1,11 @@
 let videoElement = document.getElementById('webcam');
 let canvasElement = document.getElementById('outputCanvas');
 let isModelLoaded = false;
+let model;
 
 // Função para abrir a câmera traseira em tela cheia 9:16
 async function startWebcam() {
     try {
-        // Obtendo a câmera traseira
         const constraints = {
             video: {
                 facingMode: { exact: "environment" },
@@ -33,6 +33,41 @@ async function startWebcam() {
     }
 }
 
+// Função para carregar o modelo do TensorFlow.js
+async function loadTensorFlowModel() {
+    model = await cocoSsd.load(); // Carregando o modelo COCO-SSD
+    detectObjects();
+}
+
+// Função para detectar objetos
+async function detectObjects() {
+    const predictions = await model.detect(videoElement);
+
+    // Lógica para verificar a detecção
+    predictions.forEach(prediction => {
+        if (prediction.class === 'fridge' && !document.getElementById('detectionMessage').innerText) {
+            document.getElementById('detectionMessage').innerText = 'Objeto detectado! Você passou para a próxima fase.';
+            setTimeout(() => {
+                nextPhase(); // Muda para a próxima fase
+            }, 2000); // Mudar de fase após 2 segundos
+        } else if (prediction.class !== 'fridge') {
+            document.getElementById('detectionMessage').innerText = 'Tente escanear novamente.';
+        }
+    });
+
+    // Chamando a função novamente para continuar detectando
+    requestAnimationFrame(detectObjects);
+}
+
+// Função para avançar para a próxima fase
+function nextPhase() {
+    // Aqui deve ser implementado o código para mudar de fase com base na fase atual
+    document.getElementById('scan').classList.remove('active');
+    document.getElementById('clue').classList.add('active');
+    // Altere o texto da pista para a próxima fase se necessário
+}
+
+// Eventos
 document.getElementById('startBtn').addEventListener('click', function() {
     document.getElementById('intro').classList.remove('active');
     document.getElementById('clue').classList.add('active');
@@ -44,14 +79,7 @@ document.getElementById('scanBtn').addEventListener('click', function() {
 
     // Inicia a câmera
     startWebcam();
-    
-    // Aqui podemos carregar o modelo do TensorFlow.js
-    // loadTensorFlowModel();
-});
 
-// Aqui ficará a lógica de reconhecimento com TensorFlow.js
-async function loadTensorFlowModel() {
-    // Vamos usar algum modelo do TensorFlow.js para reconhecimento
-    // const model = await tf.loadGraphModel('caminho/para/o/modelo');
-    // Função para processar o vídeo e detectar objetos
-}
+    // Carrega o modelo do TensorFlow.js
+    loadTensorFlowModel();
+});
