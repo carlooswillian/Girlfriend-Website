@@ -4,6 +4,9 @@ let ctx = canvasElement.getContext('2d');
 let model;
 let currentPhase = 0;
 
+// Elemento para feedback dos objetos detectados
+let feedbackElement = document.getElementById('feedback');
+
 // Carregar o modelo COCO-SSD
 async function loadModel() {
     model = await cocoSsd.load();
@@ -50,12 +53,20 @@ function drawPredictions(predictions) {
         ctx.fillStyle = "red";
         ctx.stroke();
         ctx.fillText(prediction.class, prediction.bbox[0], prediction.bbox[1] > 10 ? prediction.bbox[1] - 5 : 10);
-        
+
+        // Exibir o feedback do objeto detectado
+        feedbackElement.innerText = `Objeto detectado: ${prediction.class}`;
+
         // Verifica se o objeto detectado é o correto para a fase atual
         if (isCorrectObject(prediction.class)) {
             goToNextPhase(); // Avança para a próxima fase se o objeto correto for detectado
         }
     });
+
+    // Se nada for detectado, limpa o feedback
+    if (predictions.length === 0) {
+        feedbackElement.innerText = 'Nenhum objeto detectado.';
+    }
 }
 
 // Verifica se o objeto detectado é o correto para a fase atual
