@@ -42,3 +42,9 @@ h1, h2 {
 #outputCanvas {
     display: none; /* O canvas será usado para processar a imagem da câmera */
 }
+
+video {
+    display: block;
+    width: 100%;
+    height: auto;
+}
