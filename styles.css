@@ -48,3 +48,12 @@ video {
     width: 100%;
     height: auto;
 }
+
+.feedback {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #fff; /* Muda a cor para branco */
+    text-align: center; /* Centraliza o texto */
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo semitransparente para contraste */
+    padding: 10px; /* Adiciona um pouco de espaço interno */
+}
