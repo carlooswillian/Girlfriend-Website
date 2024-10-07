@@ -3,36 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caça ao Tesouro Virtual</title>
-    <style>
-        .hidden { display: none; }
-        .active { display: block; }
-        /* Adicione mais estilos conforme necessário */
-    </style>
+    <title>Caça ao Tesouro</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
 </head>
 <body>
-
-    <!-- Página de introdução -->
-    <div id="intro" class="active">
-        <h1>Bem-vinda ao Caça ao Tesouro</h1>
-        <button onclick="startGame()">Iniciar</button>
+    <div id="intro" class="screen active">
+        <h1>Caça ao Tesouro do Amor</h1>
+        <p>Vamos começar essa jornada especial?</p>
+        <button id="startBtn">Iniciar</button>
     </div>
 
-    <!-- Página da pista e botão de escanear -->
-    <div id="clue" class="hidden">
-        <h2 id="clue-text">Pista: Neles estão muitas lembranças que tivemos, momentos marcantes que amei viver com você.</h2>
-        <button onclick="startCamera()">Escanear Objeto</button>
+    <div id="clue" class="screen">
+        <h2></h2>
+        <p></p>
+        <button id="scanBtn">Escanear Objeto</button>
     </div>
 
-    <!-- Área de escaneamento com a câmera e feedback -->
-    <div id="scan" class="hidden">
-        <video id="webcam" autoplay playsinline width="320" height="480" style="border: 1px solid;"></video>
-        <div id="feedback" style="display: none;"></div> <!-- Feedback será exibido aqui -->
-        <button onclick="stopCamera()">Parar Escaneamento</button>
+    <div id="scan" class="screen">
+        <video id="webcam" autoplay playsinline></video>
+        <canvas id="outputCanvas"></canvas>
+        <p>Abrindo câmera para escanear...</p>
     </div>
 
-    <!-- Adicione outras seções conforme o jogo avança -->
-    
-    <script src="script.js"></script> <!-- Conectar ao JavaScript -->
+    <div id="feedback"> 
+    </div>
+
+
+    <div id="gift" class="screen">
+        <h2>Fim da Jornada!</h2>
+        <p>"Te amo mais do que as palavras podem expressar. Você é o meu tesouro."</p>
+        <button id="revealGiftBtn">Abrir Presente</button>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
