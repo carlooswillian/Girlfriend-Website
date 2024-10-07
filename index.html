@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,23 +8,25 @@
 </head>
 <body>
     <div id="intro" class="screen active">
-        <h1>Caça ao Tesouro do Amor</h1>
-        <p>Vamos começar essa jornada especial?</p>
+        <h1>Bem-vindo ao Caça ao Tesouro!</h1>
         <button id="startBtn">Iniciar</button>
     </div>
 
     <div id="clue" class="screen">
-        <h2>Fase 1: Momentos Especiais</h2>
-        <p>"Nela estão muitas lembranças que tivemos, momentos marcantes que amei viver com você."</p>
-        <button id="scanBtn">Escanear Objeto</button>
+        <h2 id="clueText">Nela estão muitas lembranças que tivemos, momentos marcantes que amei viver com você.</h2>
+        <button id="scanBtn">Escanear objeto</button>
     </div>
 
     <div id="scan" class="screen">
         <video id="webcam" autoplay playsinline style="display: none;"></video>
         <canvas id="outputCanvas"></canvas>
         <p>Abrindo câmera para escanear...</p>
+        <p id="detectionMessage"></p> <!-- Mensagem de detecção -->
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-automl"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
     <script src="script.js"></script>
 </body>
 </html>
