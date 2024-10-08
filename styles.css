@@ -1,3 +1,4 @@
+/* Correção do estilo da página inicial */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -17,6 +18,12 @@ body {
 
 .hidden {
     display: none;
+}
+
+#intro h1 {
+    margin-top: 50px;
+    color: #333;
+    font-size: 24px;
 }
 
 #webcam {
