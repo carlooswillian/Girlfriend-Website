@@ -1,9 +1,9 @@
 let videoElement = document.getElementById('webcam');
 let canvasElement = document.getElementById('outputCanvas');
-let feedbackElement = document.getElementById('feedback');
 let ctx = canvasElement.getContext('2d');
 let model;
 let currentPhase = 0;
+let detectedObjectElement = document.getElementById('detected-object');
 
 // Carregar o modelo COCO-SSD
 async function loadModel() {
@@ -42,7 +42,7 @@ function drawPredictions(predictions) {
     ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
     ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
     
-    let detectedObjects = [];
+    let detected = false; // Variável para acompanhar se algum objeto correto foi detectado
 
     predictions.forEach(prediction => {
         // Exibir feedback visual para objetos detectados
@@ -53,20 +53,19 @@ function drawPredictions(predictions) {
         ctx.fillStyle = "red";
         ctx.stroke();
         ctx.fillText(prediction.class, prediction.bbox[0], prediction.bbox[1] > 10 ? prediction.bbox[1] - 5 : 10);
-
-        detectedObjects.push(prediction.class); // Adiciona o objeto detectado na lista
+        
+        // Mostrar o nome do objeto detectado
+        detectedObjectElement.innerText = `Objeto detectado: ${prediction.class}`;
         
         // Verifica se o objeto detectado é o correto para a fase atual
         if (isCorrectObject(prediction.class)) {
-            goToNextPhase(); // Avança para a próxima fase se o objeto correto for detectado
+            detected = true;
         }
     });
 
-    // Atualiza o feedback abaixo da câmera
-    if (detectedObjects.length > 0) {
-        feedbackElement.innerHTML = "Objetos detectados: " + detectedObjects.join(", ");
-    } else {
-        feedbackElement.innerHTML = "Nenhum objeto detectado.";
+    // Caso nenhum objeto correto seja detectado, exibe uma mensagem padrão
+    if (!detected) {
+        detectedObjectElement.innerText = "Nenhum objeto correto detectado";
     }
 }
 
