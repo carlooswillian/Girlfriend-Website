@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caça ao Tesouro Virtual</title>
     <link rel="stylesheet" href="styles.css">
-    <title>Caça ao Tesouro</title>
 </head>
 <body>
     <div id="intro">
-        <h1>Bem-vindo ao Caça ao Tesouro!</h1>
+        <h1>Bem-vinda ao Caça ao Tesouro</h1>
         <button id="startBtn">Iniciar</button>
     </div>
 
@@ -16,17 +16,15 @@
         <h2>Fase 1: Histórias</h2>
         <p>Pista: "Neles estão muitas lembranças que tivemos, momentos marcantes que amei viver com você."</p>
         <button id="scanBtn">Escanear Objeto</button>
-        <canvas id="outputCanvas" style="display: none;"></canvas>
-        <div id="detectedObjects" style="color: black; margin-top: 20px;"></div> <!-- Área para exibir detecções -->
+        
+        <div id="cameraContainer">
+            <video id="video" width="640" height="480" autoplay style="display:block;"></video>
+            <canvas id="outputCanvas" width="640" height="480" style="display:block;"></canvas>
+        </div>
+        
+        <div id="detectedObjects" style="color: black; margin-top: 20px;"></div>
     </div>
 
-    <div id="nextPhase" class="phase" style="display:none;">
-        <h2>Próxima Fase!</h2>
-        <button id="nextBtn">Avançar</button>
-    </div>
-
-    <<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
     <script src="script.js"></script>
 </body>
 </html>
