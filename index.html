@@ -3,32 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caça ao Tesouro</title>
+    <title>Caça ao Tesouro Virtual</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="intro" class="active">
-        <h1>Bem-vindo ao Caça ao Tesouro!</h1>
-        <button id="startBtn">Iniciar</button>
-    </div>
 
-    <div id="clue">
-        <h2>Fase 1</h2>
-        <p>Dica da fase aqui.</p>
-        <button id="scanBtn">Escanear Objeto</button>
-    </div>
+<div id="intro" class="active">
+    <h1>Bem-vinda ao Caça ao Tesouro</h1>
+    <button id="startBtn">Iniciar</button>
+</div>
 
-    <div id="scan">
-        <video id="webcam" autoplay playsinline></video>
-        <canvas id="outputCanvas"></canvas>
-        <div id="feedback"></div> <!-- Feedback da detecção será exibido aqui -->
-    </div>
+<div id="clue">
+    <h2></h2>
+    <p></p>
+    <button id="scanBtn">Escanear objeto</button>
+</div>
 
-    <div id="gift">
-        <h2>Parabéns, você completou o jogo!</h2>
-        <button id="revealGiftBtn">Abrir Presente</button>
+<div id="scan">
+    <video id="webcam" autoplay playsinline></video>
+    <canvas id="outputCanvas"></canvas>
+    <div id="detection-feedback">
+        <p id="detected-object">Nenhum objeto detectado ainda</p>
     </div>
+</div>
 
-    <script src="script.js"></script>
+<div id="gift">
+    <h2>Parabéns!</h2>
+    <p>Você completou todas as fases!</p>
+    <button id="revealGiftBtn">Abrir Presente</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+<script src="script.js"></script>
 </body>
 </html>
