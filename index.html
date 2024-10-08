@@ -3,26 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caça ao Tesouro Virtual</title>
+    <title>Caça ao Tesouro</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
 </head>
 <body>
-    <div id="intro">
-        <h1>Bem-vinda ao Caça ao Tesouro</h1>
+    <div id="intro" class="screen active">
+        <h1>Caça ao Tesouro do Amor</h1>
+        <p>Vamos começar essa jornada especial?</p>
         <button id="startBtn">Iniciar</button>
     </div>
 
-    <div id="phase1" class="phase" style="display:none;">
-        <h2>Fase 1: Histórias</h2>
-        <p>Pista: "Neles estão muitas lembranças que tivemos, momentos marcantes que amei viver com você."</p>
+    <div id="clue" class="screen">
+        <h2></h2>
+        <p></p>
         <button id="scanBtn">Escanear Objeto</button>
-        
-        <div id="cameraContainer">
-            <video id="video" width="640" height="480" autoplay style="display:block;"></video>
-            <canvas id="outputCanvas" width="640" height="480" style="display:block;"></canvas>
-        </div>
-        
-        <div id="detectedObjects" style="color: black; margin-top: 20px;"></div>
+    </div>
+
+    <div id="scan" class="screen">
+        <video id="webcam" autoplay playsinline></video>
+        <canvas id="outputCanvas"></canvas>
+        <p>Abrindo câmera para escanear...</p>
+    </div>
+
+    <div id="gift" class="screen">
+        <h2>Fim da Jornada!</h2>
+        <p>"Te amo mais do que as palavras podem expressar. Você é o meu tesouro."</p>
+        <button id="revealGiftBtn">Abrir Presente</button>
     </div>
 
     <script src="script.js"></script>
