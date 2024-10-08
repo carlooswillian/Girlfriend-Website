@@ -3,7 +3,6 @@ let canvasElement = document.getElementById('outputCanvas');
 let ctx = canvasElement.getContext('2d');
 let model;
 let currentPhase = 0;
-let detectedObjectElement = document.getElementById('detected-object');
 
 // Carregar o modelo COCO-SSD
 async function loadModel() {
@@ -42,7 +41,8 @@ function drawPredictions(predictions) {
     ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
     ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
     
-    let detected = false; // Variável para acompanhar se algum objeto correto foi detectado
+    let detectedObjectsList = document.getElementById('detectedObjects');
+    detectedObjectsList.innerHTML = ''; // Limpa a lista de objetos detectados
 
     predictions.forEach(prediction => {
         // Exibir feedback visual para objetos detectados
@@ -54,19 +54,14 @@ function drawPredictions(predictions) {
         ctx.stroke();
         ctx.fillText(prediction.class, prediction.bbox[0], prediction.bbox[1] > 10 ? prediction.bbox[1] - 5 : 10);
         
-        // Mostrar o nome do objeto detectado
-        detectedObjectElement.innerText = `Objeto detectado: ${prediction.class}`;
-        
+        // Adiciona o nome do objeto detectado ao feedback na tela
+        detectedObjectsList.innerHTML += `<p>Objeto detectado: ${prediction.class}</p>`;
+
         // Verifica se o objeto detectado é o correto para a fase atual
         if (isCorrectObject(prediction.class)) {
-            detected = true;
+            goToNextPhase(); // Avança para a próxima fase se o objeto correto for detectado
         }
     });
-
-    // Caso nenhum objeto correto seja detectado, exibe uma mensagem padrão
-    if (!detected) {
-        detectedObjectElement.innerText = "Nenhum objeto correto detectado";
-    }
 }
 
 // Verifica se o objeto detectado é o correto para a fase atual
