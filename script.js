@@ -41,8 +41,6 @@ function drawPredictions(predictions) {
     ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
     ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
     
-    let feedbackMessage = ""; // Mensagem de feedback dos objetos detectados
-
     predictions.forEach(prediction => {
         // Exibir feedback visual para objetos detectados
         ctx.beginPath();
@@ -52,17 +50,12 @@ function drawPredictions(predictions) {
         ctx.fillStyle = "red";
         ctx.stroke();
         ctx.fillText(prediction.class, prediction.bbox[0], prediction.bbox[1] > 10 ? prediction.bbox[1] - 5 : 10);
-
-        feedbackMessage += `Objeto detectado: ${prediction.class}\n`; // Atualiza a mensagem de feedback
-
+        
         // Verifica se o objeto detectado é o correto para a fase atual
         if (isCorrectObject(prediction.class)) {
             goToNextPhase(); // Avança para a próxima fase se o objeto correto for detectado
         }
     });
-
-    // Atualiza o feedback na tela
-    document.getElementById('feedback').innerText = feedbackMessage;
 }
 
 // Verifica se o objeto detectado é o correto para a fase atual
@@ -96,8 +89,19 @@ function goToNextPhase() {
         videoElement.style.display = 'none'; // Esconde o vídeo
         return;
     }
-    document.getElementById('clue').querySelector('h2').innerText = `Fase ${currentPhase + 1}`;
-    document.getElementById('clue').querySelector('p').innerText = "Nova dica aqui."; // Atualize a mensagem da dica conforme necessário
+    
+    // Atualiza a mensagem da fase
+    const phaseMessages = [
+        { title: "Fase 1: Histórias", message: "Neles estão muitas lembranças que tivemos, momentos marcantes que amei viver com você." },
+        { title: "Fase 2: Tempo de Qualidade", message: "Eu amo sempre estar com você, não importa o que estejamos fazendo mas o importante é estar com você, passamos nosso tempo de qualidade usando este objeto." },
+        { title: "Fase 3: Entrada no meu Coração", message: "Você sabe que mora no meu coração, você é a pessoa mais incrível deste mundo, com este objeto você não abre meu coração mas é usado para abrir." },
+        { title: "Fase 4: Sonho com você sempre", message: "Quando o dia termina, aqui é onde encontramos paz e descanso, o nosso refúgio e de bons momentos juntos." },
+        { title: "Fase 5: Momentos Marcantes", message: "Olhamos para isso todos os dias e podemos nos lembrar de um dia inesquecível." }
+    ];
+
+    document.getElementById('clue').querySelector('h2').innerText = phaseMessages[currentPhase].title;
+    document.getElementById('clue').querySelector('p').innerText = phaseMessages[currentPhase].message;
+
     document.getElementById('clue').classList.add('active');
     document.getElementById('scan').classList.remove('active');
 }
@@ -109,9 +113,6 @@ document.getElementById('startBtn').addEventListener('click', function() {
     
     // Atualizar a mensagem da fase 1 imediatamente
     currentPhase = 0; // Reinicia a fase
-    document.getElementById('clue').querySelector('h2').innerText = "Fase 1: Histórias";
-    document.getElementById('clue').querySelector('p').innerText = "Neles estão muitas lembranças que tivemos, momentos marcantes que amei viver com você."; // Atualize conforme necessário
-    
     loadModel().then(() => {
         // Começar a detecção de objetos depois que o modelo estiver carregado
         startWebcam();
