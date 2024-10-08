@@ -7,34 +7,30 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<div id="intro" class="active">
-    <h1>Bem-vinda ao Caça ao Tesouro</h1>
-    <button id="startBtn">Iniciar</button>
-</div>
-
-<div id="clue">
-    <h2></h2>
-    <p></p>
-    <button id="scanBtn">Escanear objeto</button>
-</div>
-
-<div id="scan">
-    <video id="webcam" autoplay playsinline></video>
-    <canvas id="outputCanvas"></canvas>
-    <div id="detection-feedback">
-        <p id="detected-object">Nenhum objeto detectado ainda</p>
+    <div id="intro" class="active">
+        <h1>Bem-vinda ao Caça ao Tesouro!</h1>
+        <button id="startBtn">Iniciar</button>
     </div>
-</div>
 
-<div id="gift">
-    <h2>Parabéns!</h2>
-    <p>Você completou todas as fases!</p>
-    <button id="revealGiftBtn">Abrir Presente</button>
-</div>
+    <div id="clue" class="hidden">
+        <h2></h2>
+        <p></p>
+        <button id="scanBtn">Escanear objeto</button>
+    </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
-<script src="script.js"></script>
+    <div id="scan" class="hidden">
+        <video id="webcam" autoplay playsinline></video>
+        <canvas id="outputCanvas"></canvas>
+        <div id="detectedObjects"></div>
+    </div>
+
+    <div id="gift" class="hidden">
+        <h1>Você completou todas as fases!</h1>
+        <button id="revealGiftBtn">Abrir Presente</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+    <script src="script.js"></script>
 </body>
 </html>
