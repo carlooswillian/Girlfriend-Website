@@ -1,29 +1,25 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
     text-align: center;
-    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+#intro {
+    margin-top: 50px;
 }
 
 .phase {
-    display: none;
+    margin-top: 50px;
 }
 
-#detectedObjects {
-    color: black;
+#cameraContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-top: 20px;
-    font-size: 18px; /* Ajuste o tamanho da fonte se necessário */
 }
 
-button {
-    padding: 10px 20px;
-    margin: 10px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
+video, canvas {
+    border: 1px solid black;
+    margin-top: 10px;
 }
