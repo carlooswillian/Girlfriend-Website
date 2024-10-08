@@ -1,34 +1,23 @@
-let model;
-let videoElement;
-let canvasElement;
-let ctx;
+let videoElement = null;
+let canvasElement = null;
+let ctx = null;
+let model = null;
 let isScanning = false;
 
-document.getElementById('startBtn').addEventListener('click', startGame);
-document.getElementById('scanBtn').addEventListener('click', startScanning);
-document.getElementById('nextBtn').addEventListener('click', goToNextPhase);
-
-async function startGame() {
-    document.getElementById('intro').style.display = 'none';
-    document.getElementById('phase1').style.display = 'block';
-    await loadModel();
-    await setupCamera();
-    startDetection();
-}
-
 async function loadModel() {
+    // Carrega o modelo do TensorFlow.js
     model = await cocoSsd.load();
-    console.log("Modelo carregado");
 }
 
 async function setupCamera() {
-    videoElement = document.createElement('video');
-    videoElement.width = 640;
-    videoElement.height = 480;
-
+    videoElement = document.getElementById('video');
+    
     const stream = await navigator.mediaDevices.getUserMedia({
-        video: true
+        video: {
+            facingMode: { exact: "environment" }  // Tenta usar a câmera traseira
+        }
     });
+
     videoElement.srcObject = stream;
 
     return new Promise((resolve) => {
@@ -38,7 +27,7 @@ async function setupCamera() {
     });
 }
 
-function startScanning() {
+function startDetection() {
     if (!isScanning) {
         isScanning = true;
         detectObjects();
@@ -48,22 +37,22 @@ function startScanning() {
 async function detectObjects() {
     ctx = document.getElementById('outputCanvas').getContext('2d');
     canvasElement = document.getElementById('outputCanvas');
-    canvasElement.width = videoElement.width;
-    canvasElement.height = videoElement.height;
+    canvasElement.width = videoElement.videoWidth;
+    canvasElement.height = videoElement.videoHeight;
 
     ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
     const predictions = await model.detect(videoElement);
     drawPredictions(predictions);
-    requestAnimationFrame(detectObjects); // Continuar a detecção
+    requestAnimationFrame(detectObjects);  // Continuar a detecção em loop
 }
 
 function drawPredictions(predictions) {
     ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
     ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
-    
+
     const detectedObjectsDiv = document.getElementById('detectedObjects');
-    detectedObjectsDiv.innerHTML = ""; // Limpa a lista anterior
-    
+    detectedObjectsDiv.innerHTML = "";  // Limpa a lista anterior
+
     predictions.forEach(prediction => {
         ctx.beginPath();
         ctx.rect(prediction.bbox[0], prediction.bbox[1], prediction.bbox[2], prediction.bbox[3]);
@@ -72,24 +61,29 @@ function drawPredictions(predictions) {
         ctx.fillStyle = "red";
         ctx.stroke();
         ctx.fillText(prediction.class, prediction.bbox[0], prediction.bbox[1] > 10 ? prediction.bbox[1] - 5 : 10);
-        
+
         // Adicionar o objeto detectado à lista
         detectedObjectsDiv.innerHTML += `<div>Detectado: ${prediction.class}</div>`;
-        
+
         // Verifica se o objeto detectado é o correto para a fase atual
         if (isCorrectObject(prediction.class)) {
-            goToNextPhase(); // Avança para a próxima fase se o objeto correto for detectado
+            goToNextPhase();  // Avança para a próxima fase se o objeto correto for detectado
         }
     });
 }
 
-function isCorrectObject(object) {
-    // Defina aqui os objetos corretos para a fase atual
-    const correctObjects = ["book", "photo", "notebook"]; // Adicione mais objetos conforme necessário
-    return correctObjects.includes(object);
+function isCorrectObject(detectedClass) {
+    const validObjectsPhase1 = ['book', 'notebook', 'binder', 'album'];
+    return validObjectsPhase1.includes(detectedClass);
 }
 
-function goToNextPhase() {
-    document.getElementById('phase1').style.display = 'none';
-    document.getElementById('nextPhase').style.display = 'block';
+async function startGame() {
+    document.getElementById('intro').style.display = 'none';
+    document.getElementById('phase1').style.display = 'block';
+    await loadModel();
+    await setupCamera();
+    startDetection();
 }
+
+document.getElementById('startBtn').addEventListener('click', startGame);
+document.getElementById('scanBtn').addEventListener('click', startDetection);
