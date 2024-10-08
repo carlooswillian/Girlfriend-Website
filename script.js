@@ -1,5 +1,6 @@
 let videoElement = document.getElementById('webcam');
 let canvasElement = document.getElementById('outputCanvas');
+let feedbackElement = document.getElementById('feedback');
 let ctx = canvasElement.getContext('2d');
 let model;
 let currentPhase = 0;
@@ -41,6 +42,8 @@ function drawPredictions(predictions) {
     ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
     ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
     
+    let detectedObjects = [];
+
     predictions.forEach(prediction => {
         // Exibir feedback visual para objetos detectados
         ctx.beginPath();
@@ -50,12 +53,21 @@ function drawPredictions(predictions) {
         ctx.fillStyle = "red";
         ctx.stroke();
         ctx.fillText(prediction.class, prediction.bbox[0], prediction.bbox[1] > 10 ? prediction.bbox[1] - 5 : 10);
+
+        detectedObjects.push(prediction.class); // Adiciona o objeto detectado na lista
         
         // Verifica se o objeto detectado é o correto para a fase atual
         if (isCorrectObject(prediction.class)) {
             goToNextPhase(); // Avança para a próxima fase se o objeto correto for detectado
         }
     });
+
+    // Atualiza o feedback abaixo da câmera
+    if (detectedObjects.length > 0) {
+        feedbackElement.innerHTML = "Objetos detectados: " + detectedObjects.join(", ");
+    } else {
+        feedbackElement.innerHTML = "Nenhum objeto detectado.";
+    }
 }
 
 // Verifica se o objeto detectado é o correto para a fase atual
