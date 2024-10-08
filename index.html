@@ -1,37 +1,33 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caça ao Tesouro</title>
     <link rel="stylesheet" href="styles.css">
-    <title>Caça ao Tesouro Virtual</title>
 </head>
 <body>
     <div id="intro" class="active">
         <h1>Bem-vindo ao Caça ao Tesouro!</h1>
         <button id="startBtn">Iniciar</button>
     </div>
-
-    <div id="clue" class="hidden">
+    <div id="clue">
         <h2>Fase 1: Histórias</h2>
         <p>Neles estão muitas lembranças que tivemos, momentos marcantes que amei viver com você.</p>
+        <button id="scanBtn">Escanear Objeto</button>
     </div>
-
-    <div id="scan" class="hidden">
-        <h2>Escaneando objetos...</h2>
-        <video id="webcam" autoplay playsinline></video>
+    <div id="scan" class="active">
+        <h2>Escaneando...</h2>
+        <video id="webcam" width="100%" height="auto" autoplay playsinline></video>
         <canvas id="outputCanvas" width="640" height="480"></canvas>
-        <div id="feedback"></div>
     </div>
-
-    <div id="gift" class="hidden">
-        <h2>Surpresa Final!</h2>
-        <p>Te amo mais do que as palavras podem expressar. Você é o meu tesouro.</p>
+    <div id="gift" class="active">
+        <h2>Você ganhou um presente!</h2>
         <button id="revealGiftBtn">Abrir Presente</button>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-automl"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
     <script src="script.js"></script>
 </body>
