@@ -41,8 +41,7 @@ function drawPredictions(predictions) {
     ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
     ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
     
-    let detectedObjectsList = document.getElementById('detectedObjects');
-    detectedObjectsList.innerHTML = ''; // Limpa a lista de objetos detectados
+    let feedbackMessage = ""; // Mensagem de feedback dos objetos detectados
 
     predictions.forEach(prediction => {
         // Exibir feedback visual para objetos detectados
@@ -53,15 +52,17 @@ function drawPredictions(predictions) {
         ctx.fillStyle = "red";
         ctx.stroke();
         ctx.fillText(prediction.class, prediction.bbox[0], prediction.bbox[1] > 10 ? prediction.bbox[1] - 5 : 10);
-        
-        // Adiciona o nome do objeto detectado ao feedback na tela
-        detectedObjectsList.innerHTML += `<p>Objeto detectado: ${prediction.class}</p>`;
+
+        feedbackMessage += `Objeto detectado: ${prediction.class}\n`; // Atualiza a mensagem de feedback
 
         // Verifica se o objeto detectado é o correto para a fase atual
         if (isCorrectObject(prediction.class)) {
             goToNextPhase(); // Avança para a próxima fase se o objeto correto for detectado
         }
     });
+
+    // Atualiza o feedback na tela
+    document.getElementById('feedback').innerText = feedbackMessage;
 }
 
 // Verifica se o objeto detectado é o correto para a fase atual
