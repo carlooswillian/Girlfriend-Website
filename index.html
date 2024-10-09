@@ -1,34 +1,28 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caça ao Tesouro</title>
+    <title>Treasure Hunt</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="intro" class="active">
-        <h1>Bem-vindo ao Caça ao Tesouro!</h1>
-        <button id="startBtn">Iniciar</button>
+    <div id="intro" class="page">
+        <h1>Bem-vindo ao Treasure Hunt</h1>
+        <button id="startButton">Iniciar</button>
     </div>
-    <div id="clue">
-        <h2>Fase 1: Histórias</h2>
-        <p>Neles estão muitas lembranças que tivemos, momentos marcantes que amei viver com você.</p>
-        <button id="scanBtn">Escanear Objeto</button>
+
+    <div id="game" class="page hidden">
+        <div id="phase">
+            <h2 id="clue"></h2>
+            <button id="scanButton">Escanear objeto</button>
+        </div>
+        <div id="cameraContainer" class="hidden">
+            <video id="camera" autoplay playsinline></video>
+            <p id="feedback">Aguardando detecção...</p>
+        </div>
     </div>
-    <div id="scan" class="active">
-        <h2>Escaneando...</h2>
-        <video id="webcam" width="100%" height="auto" autoplay playsinline></video>
-        <canvas id="outputCanvas" width="640" height="480"></canvas>
-    </div>
-    <div id="gift" class="active">
-        <h2>Você ganhou um presente!</h2>
-        <button id="revealGiftBtn">Abrir Presente</button>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-automl"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+
     <script src="script.js"></script>
 </body>
 </html>
