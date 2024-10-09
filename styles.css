@@ -1,50 +1,36 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f2f2f2;
-}
-
-.screen {
-    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.page {
     text-align: center;
 }
 
-.active {
-    display: flex;
+.hidden {
+    display: none;
 }
 
 button {
     padding: 10px 20px;
     font-size: 18px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    margin-top: 20px;
 }
 
-button:hover {
-    background-color: #45a049;
-}
-
-h1, h2 {
-    color: #333;
-}
-
-#outputCanvas {
-    display: none; /* O canvas será usado para processar a imagem da câmera */
+#cameraContainer {
+    margin-top: 20px;
 }
 
 video {
-    display: block;
     width: 100%;
+    max-width: 400px;
     height: auto;
+    border: 2px solid #000;
+    display: block;
 }
