@@ -1,25 +1,37 @@
-/* Estilo geral */
+/* Geral */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f9f9f9;
+  background: linear-gradient(to bottom, #ffe6e6, #ff9999);
+  color: #333;
   text-align: center;
 }
 
-header h1 {
-  font-size: 2rem;
-  margin: 20px 0;
-  color: #ff4d4d;
+header {
+  background: #ff4d4d;
+  padding: 20px;
+  color: white;
+  font-size: 24px;
 }
 
-/* Carrossel */
-.carousel {
+h1 {
+  margin: 0;
+}
+
+#carousel {
   position: relative;
-  width: 100%;
-  max-width: 300px;
-  margin: 20px auto;
+  margin: 20px 0;
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
   border-radius: 10px;
 }
 
@@ -29,22 +41,21 @@ header h1 {
 }
 
 .carousel-images img {
-  width: 100%;
-  max-width: 300px;
-  height: auto;
-  flex-shrink: 0;
+  max-width: 100%;
+  flex: 0 0 100%;
+  object-fit: cover;
   border-radius: 10px;
 }
 
 .arrow {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.5);
-  border: none;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
+  color: #ff4d4d;
   z-index: 10;
 }
 
@@ -73,12 +84,9 @@ header h1 {
   background: #ff4d4d;
 }
 
-/* Texto romântico */
-.romantic-text p {
-  font-size: 1.2rem;
-  color: #333;
-  padding: 0 20px;
-  margin: 20px 0;
+#romantic-text p {
+  font-size: 18px;
+  margin: 20px 10px;
 }
 
 #video video {
@@ -88,28 +96,28 @@ header h1 {
   margin: 20px 0;
 }
 
-
-/* Botão de amor */
-.love-button {
-  margin: 20px 0;
+#button-section {
+  margin: 20px;
 }
 
-#happyButton {
-  background-color: #ff4d4d;
+#love-button {
+  background: #ff4d4d;
   color: white;
   border: none;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border-radius: 5px;
+  padding: 15px 30px;
+  font-size: 16px;
+  border-radius: 30px;
   cursor: pointer;
+  transition: background 0.3s;
 }
 
-#happyButton:hover {
-  background-color: #e63939;
+#love-button:hover {
+  background: #e63939;
 }
 
-#loveMessage {
-  margin-top: 15px;
-  font-size: 1.2rem;
+#love-message {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
   color: #333;
 }
