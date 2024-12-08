@@ -1,64 +1,51 @@
-/* Geral */
+/* Estilo geral */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(to bottom, #ffe6e6, #ff9999);
-  color: #333;
+  background-color: #f9f9f9;
   text-align: center;
 }
 
-header {
-  background: #ff4d4d;
-  padding: 20px;
-  color: white;
-  font-size: 24px;
-}
-
-h1 {
-  margin: 0;
-}
-
-#carousel {
-  position: relative;
+header h1 {
+  font-size: 2rem;
   margin: 20px 0;
+  color: #ff4d4d;
 }
 
+/* Carrossel */
 .carousel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
   position: relative;
-  width: 90%; /* Define o tamanho do carrossel */
-  max-width: 300px; /* Limita o tamanho máximo */
-  margin: 0 auto;
-  border-radius: 10px; /* Bordas arredondadas */
+  width: 100%;
+  max-width: 300px;
+  margin: 20px auto;
+  overflow: hidden;
+  border-radius: 10px;
 }
 
 .carousel-images {
   display: flex;
   transition: transform 0.5s ease-in-out;
-  width: 100%; /* Garante que o carrossel ocupe toda a largura disponível */
 }
 
 .carousel-images img {
-  width: 100%; /* As imagens ocupam toda a largura do carrossel */
-  height: auto; /* Mantém a proporção das imagens */
-  max-height: 500px; /* Define um limite para a altura */
-  object-fit: cover; /* Ajusta a imagem para preencher o espaço sem distorções */
-  border-radius: 10px; /* Bordas arredondadas */
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  flex-shrink: 0;
+  border-radius: 10px;
 }
 
 .arrow {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  color: #ff4d4d;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 10;
 }
 
 .left {
@@ -86,40 +73,42 @@ h1 {
   background: #ff4d4d;
 }
 
-#romantic-text p {
-  font-size: 18px;
-  margin: 20px 10px;
-}
-
-#video video {
-  width: 90%;
-  max-width: 300px;
-  border-radius: 10px;
+/* Texto romântico */
+.romantic-text p {
+  font-size: 1.2rem;
+  color: #333;
+  padding: 0 20px;
   margin: 20px 0;
 }
 
-#button-section {
-  margin: 20px;
+/* Vídeo */
+.video-section video {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 10px;
 }
 
-#love-button {
-  background: #ff4d4d;
+/* Botão de amor */
+.love-button {
+  margin: 20px 0;
+}
+
+#happyButton {
+  background-color: #ff4d4d;
   color: white;
   border: none;
-  padding: 15px 30px;
-  font-size: 16px;
-  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s;
 }
 
-#love-button:hover {
-  background: #e63939;
+#happyButton:hover {
+  background-color: #e63939;
 }
 
-#love-message {
-  margin-top: 20px;
-  font-size: 18px;
-  font-weight: bold;
+#loveMessage {
+  margin-top: 15px;
+  font-size: 1.2rem;
   color: #333;
 }
