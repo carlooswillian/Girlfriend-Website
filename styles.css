@@ -81,19 +81,11 @@ header h1 {
   margin: 20px 0;
 }
 
-/* Vídeo */
-.video-section {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
-}
-
-.video-section video {
-  width: 100%;
+#video video {
+  width: 90%;
   max-width: 300px;
-  height: auto; /* Mantém a proporção do vídeo */
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adiciona um leve efeito de sombra */
+  margin: 20px 0;
 }
 
 
