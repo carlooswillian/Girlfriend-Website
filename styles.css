@@ -30,19 +30,24 @@ h1 {
   justify-content: center;
   overflow: hidden;
   position: relative;
-  width: 90%;
+  width: 90%; /* Define o tamanho do carrossel */
+  max-width: 300px; /* Limita o tamanho máximo */
   margin: 0 auto;
+  border-radius: 10px; /* Bordas arredondadas */
 }
 
 .carousel-images {
   display: flex;
   transition: transform 0.5s ease-in-out;
+  width: 100%; /* Garante que o carrossel ocupe toda a largura disponível */
 }
 
 .carousel-images img {
-  width: 100%;
-  max-width: 300px;
-  border-radius: 10px;
+  width: 100%; /* As imagens ocupam toda a largura do carrossel */
+  height: auto; /* Mantém a proporção das imagens */
+  max-height: 500px; /* Define um limite para a altura */
+  object-fit: cover; /* Ajusta a imagem para preencher o espaço sem distorções */
+  border-radius: 10px; /* Bordas arredondadas */
 }
 
 .arrow {
