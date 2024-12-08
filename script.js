@@ -1,75 +1,134 @@
-// Controle do carrossel
-const images = document.querySelector('.carousel-images');
-const dotsContainer = document.querySelector('.dots');
-const imageCount = images.children.length;
-
-// Criar os pontos dinamicamente
-dotsContainer.innerHTML = '';
-for (let i = 0; i < imageCount; i++) {
-  const dot = document.createElement('span');
-  dot.classList.add('dot');
-  if (i === 0) dot.classList.add('active');
-  dotsContainer.appendChild(dot);
+/* Geral */
+body {
+  font-family: 'Georgia', serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to bottom, #fdf6f0, #f7e4d7);
+  color: #5a4e48;
+  text-align: center;
 }
 
-const dots = document.querySelectorAll('.dot');
-let currentIndex = 0;
-
-document.querySelector('.left').addEventListener('click', () => {
-  currentIndex = (currentIndex > 0) ? currentIndex - 1 : imageCount - 1;
-  updateCarousel();
-});
-
-document.querySelector('.right').addEventListener('click', () => {
-  currentIndex = (currentIndex < imageCount - 1) ? currentIndex + 1 : 0;
-  updateCarousel();
-});
-
-function updateCarousel() {
-  images.style.transform = `translateX(-${currentIndex * 100}%)`;
-  dots.forEach((dot, index) => {
-    dot.classList.toggle('active', index === currentIndex);
-  });
+header {
+  background: #e8d5c9;
+  padding: 20px;
+  color: #5a4e48;
+  font-size: 28px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
 }
 
-// Frases de amor
-const phrases = [
-  "Seu sorriso é o mais lindo que já vi.",
-  "Amo como você ilumina meu dia.",
-  "Você é minha melhor escolha.",
-  "Admiro sua força e determinação.",
-  "Cada momento ao seu lado é mágico.",
-  "Você é a razão do meu viver.",
-  "Amo como você me faz rir.",
-  "Você é meu lugar seguro.",
-  "Seu olhar me dá paz.",
-  "Não há ninguém como você.",
-  "Amo como você cuida de mim.",
-  "Seu amor é tudo que preciso.",
-  "Você é minha melhor amiga e amor.",
-  "Seu abraço é meu refúgio.",
-  "Adoro ouvir sua voz.",
-  "Você é minha inspiração diária.",
-  "Seu carinho é único.",
-  "Amo nossas aventuras juntos.",
-  "Você é linda por dentro e por fora.",
-  "Você é meu mundo inteiro.",
-  "Seu amor é minha maior benção.",
-  "Amo sua risada contagiante.",
-  "Você me completa.",
-  "Sou eternamente grato por você.",
-  "Você é meu anjo na terra.",
-  "Seu toque me acalma.",
-  "Você é meu sonho realizado.",
-  "Amo nossa conexão especial.",
-  "Você é minha razão para acreditar no amor.",
-  "Te amo mais do que palavras podem expressar."
-];
+h1 {
+  margin: 0;
+}
 
-const loveButton = document.getElementById('love-button');
-const loveMessage = document.getElementById('love-message');
+#carousel {
+  position: relative;
+  margin: 30px auto;
+  max-width: 90%;
+}
 
-loveButton.addEventListener('click', () => {
-  const randomIndex = Math.floor(Math.random() * phrases.length);
-  loveMessage.textContent = phrases[randomIndex];
-});
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  border-radius: 10px;
+}
+
+.carousel-images {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-images img {
+  max-width: 100%;
+  flex: 0 0 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.arrow {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #8c776c;
+  z-index: 10;
+}
+
+.left {
+  left: 10px;
+}
+
+.right {
+  right: 10px;
+}
+
+.dots {
+  margin-top: 10px;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  background: #d4bfb1;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+.dot.active {
+  background: #8c776c;
+}
+
+#romantic-text p {
+  font-size: 20px;
+  margin: 30px 20px;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+#video video {
+  width: 90%;
+  max-width: 320px;
+  border-radius: 10px;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#button-section {
+  margin: 40px 0;
+}
+
+#love-button {
+  background: #d4bfb1;
+  color: #5a4e48;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-family: 'Georgia', serif;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+#love-button:hover {
+  background: #8c776c;
+  color: #fff;
+}
+
+#love-message {
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #5a4e48;
+  font-family: 'Georgia', serif;
+}
