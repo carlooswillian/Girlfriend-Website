@@ -26,50 +26,54 @@ document.querySelector('.right').addEventListener('click', () => {
 });
 
 function updateCarousel() {
-  images.style.transform = `translateX(-${currentIndex * 100}%)`;
+  const imageWidth = images.children[0].clientWidth; // Largura da imagem
+  images.style.transform = `translateX(-${currentIndex * imageWidth}px)`;
   dots.forEach((dot, index) => {
     dot.classList.toggle('active', index === currentIndex);
   });
 }
 
-// Frases de amor
-const phrases = [
-  "Seu sorriso é o mais lindo que já vi.",
-  "Amo como você ilumina meu dia.",
-  "Você é minha melhor escolha.",
-  "Admiro sua força e determinação.",
-  "Cada momento ao seu lado é mágico.",
-  "Você é a razão do meu viver.",
-  "Amo como você me faz rir.",
-  "Você é meu lugar seguro.",
-  "Seu olhar me dá paz.",
-  "Não há ninguém como você.",
-  "Amo como você cuida de mim.",
-  "Seu amor é tudo que preciso.",
-  "Você é minha melhor amiga e amor.",
-  "Seu abraço é meu refúgio.",
-  "Adoro ouvir sua voz.",
+// Atualizar a largura do carrossel ao redimensionar a janela
+window.addEventListener('resize', () => {
+  updateCarousel();
+});
+
+// Mensagens de amor
+const messages = [
+  "Seu sorriso ilumina meu dia.",
+  "Adoro o som da sua voz.",
+  "Você é a melhor coisa que já aconteceu comigo.",
+  "Te amo mais do que tudo.",
+  "Você é meu porto seguro.",
+  "Seu abraço é meu lugar favorito.",
+  "Adoro quando você sorri para mim.",
+  "Você é perfeita para mim.",
   "Você é minha inspiração diária.",
-  "Seu carinho é único.",
-  "Amo nossas aventuras juntos.",
-  "Você é linda por dentro e por fora.",
-  "Você é meu mundo inteiro.",
-  "Seu amor é minha maior benção.",
-  "Amo sua risada contagiante.",
+  "Sou grato por ter você na minha vida.",
+  "Amo como você faz tudo parecer mágico.",
+  "Seu olhar me encanta.",
+  "Você é meu tudo.",
+  "Você é a mulher mais incrível do mundo.",
+  "Adoro suas risadas.",
+  "Você faz meu coração bater mais rápido.",
+  "Não consigo imaginar minha vida sem você.",
+  "Te amo por quem você é.",
+  "Você é meu grande amor.",
+  "Sou louco por você.",
+  "Adoro seus jeitos e manias.",
+  "Você me faz querer ser melhor.",
+  "Você é minha razão de viver.",
+  "Te amo de todo o coração.",
+  "Você é minha metade perfeita.",
   "Você me completa.",
-  "Sou eternamente grato por você.",
-  "Você é meu anjo na terra.",
-  "Seu toque me acalma.",
+  "Sou feliz porque tenho você.",
+  "Você é minha felicidade.",
   "Você é meu sonho realizado.",
-  "Amo nossa conexão especial.",
-  "Você é minha razão para acreditar no amor.",
-  "Te amo mais do que palavras podem expressar."
+  "Você é tudo para mim."
 ];
 
-const loveButton = document.getElementById('love-button');
-const loveMessage = document.getElementById('love-message');
-
-loveButton.addEventListener('click', () => {
-  const randomIndex = Math.floor(Math.random() * phrases.length);
-  loveMessage.textContent = phrases[randomIndex];
+const loveMessage = document.getElementById('loveMessage');
+document.getElementById('happyButton').addEventListener('click', () => {
+  const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+  loveMessage.textContent = randomMessage;
 });
