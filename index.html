@@ -1,28 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Treasure Hunt</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Te amo Vidinha</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="intro" class="page">
-        <h1>Bem-vindo ao Treasure Hunt</h1>
-        <button id="startButton">Iniciar</button>
-    </div>
+  <header>
+    <h1>Te amo Vidinha</h1>
+  </header>
 
-    <div id="game" class="page hidden">
-        <div id="phase">
-            <h2 id="clue"></h2>
-            <button id="scanButton">Escanear objeto</button>
-        </div>
-        <div id="cameraContainer" class="hidden">
-            <video id="camera" autoplay playsinline></video>
-            <p id="feedback">Aguardando detecção...</p>
-        </div>
+  <section id="carousel">
+    <div class="carousel">
+      <button class="arrow left">&lt;</button>
+      <div class="carousel-images">
+        <img src="foto1.jpg" alt="Foto 1">
+        <img src="foto2.jpg" alt="Foto 2">
+        <img src="foto3.jpg" alt="Foto 3">
+        <img src="foto4.jpg" alt="Foto 4">
+        <img src="foto5.jpg" alt="Foto 5">
+        <img src="foto6.jpg" alt="Foto 6">
+        <img src="foto7.jpg" alt="Foto 7">
+      </div>
+      <button class="arrow right">&gt;</button>
     </div>
+    <div class="dots"></div>
+  </section>
 
-    <script src="script.js"></script>
+  <section id="romantic-text">
+    <p>
+      Minha vidinha, cada segundo ao seu lado faz meu coração bater mais forte. 
+      Você é o motivo dos meus sorrisos e a inspiração para todos os meus sonhos. 
+      Não existe nada neste mundo que eu não faria para te fazer feliz.
+    </p>
+  </section>
+
+  <section id="video">
+    <video autoplay loop muted>
+      <source src="video.mp4" type="video/mp4">
+      Seu navegador não suporta a reprodução de vídeos.
+    </video>
+  </section>
+
+  <section id="button-section">
+    <button id="love-button">Aperte quando estiver triste.</button>
+    <p id="love-message"></p>
+  </section>
+
+  <script src="script.js"></script>
 </body>
 </html>
