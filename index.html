@@ -1,119 +1,53 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(to bottom, #ffe6e6, #ff9999);
-  color: #333;
-  text-align: center;
-}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Te amo Vidinha</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Te amo Vidinha</h1>
+  </header>
 
-header {
-  background: #ff4d4d;
-  padding: 20px;
-  color: white;
-  font-size: 24px;
-}
+  <section id="carousel">
+    <div class="carousel">
+      <button class="arrow left">&lt;</button>
+      <div class="carousel-images">
+        <img src="foto1.jpg" alt="Foto 1">
+        <img src="foto2.jpg" alt="Foto 2">
+        <img src="foto3.jpg" alt="Foto 3">
+      </div>
+      <button class="arrow right">&gt;</button>
+    </div>
+    <div class="dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </section>
 
-h1 {
-  margin: 0;
-}
+  <section id="romantic-text">
+    <p>
+      Minha vidinha, cada segundo ao seu lado faz meu coração bater mais forte. 
+      Você é o motivo dos meus sorrisos e a inspiração para todos os meus sonhos. 
+      Não existe nada neste mundo que eu não faria para te fazer feliz.
+    </p>
+  </section>
 
-#carousel {
-  position: relative;
-  margin: 20px 0;
-}
+  <section id="video">
+    <video autoplay loop muted>
+      <source src="video.mp4" type="video/mp4">
+      Seu navegador não suporta a reprodução de vídeos.
+    </video>
+  </section>
 
-.carousel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-  width: 90%;
-  margin: 0 auto;
-}
+  <section id="button-section">
+    <button id="love-button">Aperte quando estiver triste.</button>
+    <p id="love-message"></p>
+  </section>
 
-.carousel-images {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-
-.carousel-images img {
-  width: 100%;
-  max-width: 300px;
-  border-radius: 10px;
-}
-
-.arrow {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #ff4d4d;
-}
-
-.left {
-  left: 10px;
-}
-
-.right {
-  right: 10px;
-}
-
-.dots {
-  margin-top: 10px;
-}
-
-.dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin: 0 5px;
-  background: #ddd;
-  border-radius: 50%;
-}
-
-.dot.active {
-  background: #ff4d4d;
-}
-
-#romantic-text p {
-  font-size: 18px;
-  margin: 20px 10px;
-}
-
-#video video {
-  width: 90%;
-  max-width: 300px;
-  border-radius: 10px;
-  margin: 20px 0;
-}
-
-#button-section {
-  margin: 20px;
-}
-
-#love-button {
-  background: #ff4d4d;
-  color: white;
-  border: none;
-  padding: 15px 30px;
-  font-size: 16px;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-#love-button:hover {
-  background: #e63939;
-}
-
-#love-message {
-  margin-top: 20px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
-}
+  <script src="script.js"></script>
+</body>
+</html>
