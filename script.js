@@ -1,75 +1,60 @@
-// Controle do carrossel
-const images = document.querySelector('.carousel-images');
-const dotsContainer = document.querySelector('.dots');
-const imageCount = images.children.length;
-
-// Criar os pontos dinamicamente
-dotsContainer.innerHTML = '';
-for (let i = 0; i < imageCount; i++) {
-  const dot = document.createElement('span');
-  dot.classList.add('dot');
-  if (i === 0) dot.classList.add('active');
-  dotsContainer.appendChild(dot);
-}
-
-const dots = document.querySelectorAll('.dot');
+// Carrossel
 let currentIndex = 0;
-
-document.querySelector('.left').addEventListener('click', () => {
-  currentIndex = (currentIndex > 0) ? currentIndex - 1 : imageCount - 1;
-  updateCarousel();
-});
-
-document.querySelector('.right').addEventListener('click', () => {
-  currentIndex = (currentIndex < imageCount - 1) ? currentIndex + 1 : 0;
-  updateCarousel();
-});
+const images = document.querySelectorAll('.carousel-images img');
+const dots = document.querySelectorAll('.dot');
 
 function updateCarousel() {
-  images.style.transform = `translateX(-${currentIndex * 100}%)`;
-  dots.forEach((dot, index) => {
-    dot.classList.toggle('active', index === currentIndex);
-  });
+  const newTransformValue = -currentIndex * 100 + '%';
+  document.querySelector('.carousel-images').style.transform = `translateX(${newTransformValue})`;
+  
+  dots.forEach(dot => dot.classList.remove('active'));
+  dots[currentIndex].classList.add('active');
 }
 
-// Frases de amor
-const phrases = [
-  "Seu sorriso é o mais lindo que já vi.",
-  "Amo como você ilumina meu dia.",
-  "Você é minha melhor escolha.",
-  "Admiro sua força e determinação.",
-  "Cada momento ao seu lado é mágico.",
-  "Você é a razão do meu viver.",
-  "Amo como você me faz rir.",
-  "Você é meu lugar seguro.",
-  "Seu olhar me dá paz.",
-  "Não há ninguém como você.",
-  "Amo como você cuida de mim.",
-  "Seu amor é tudo que preciso.",
-  "Você é minha melhor amiga e amor.",
-  "Seu abraço é meu refúgio.",
-  "Adoro ouvir sua voz.",
-  "Você é minha inspiração diária.",
-  "Seu carinho é único.",
-  "Amo nossas aventuras juntos.",
-  "Você é linda por dentro e por fora.",
-  "Você é meu mundo inteiro.",
-  "Seu amor é minha maior benção.",
-  "Amo sua risada contagiante.",
-  "Você me completa.",
-  "Sou eternamente grato por você.",
-  "Você é meu anjo na terra.",
-  "Seu toque me acalma.",
-  "Você é meu sonho realizado.",
-  "Amo nossa conexão especial.",
-  "Você é minha razão para acreditar no amor.",
-  "Te amo mais do que palavras podem expressar."
+function nextImage() {
+  currentIndex = (currentIndex + 1) % images.length;
+  updateCarousel();
+}
+
+function prevImage() {
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  updateCarousel();
+}
+
+// Gerar Mensagens
+const messages = [
+  "Eu amo cada detalhe seu, desde seu sorriso até o jeito que você me olha.",
+  "Você é a luz que ilumina meus dias, meu maior amor.",
+  "Meu coração é seu, e sempre será. Te amo de forma incondicional.",
+  "Em cada abraço seu, sinto que estou no lugar certo.",
+  "Você me faz acreditar no amor, na vida e em mim mesmo.",
+  "Com você, encontrei a felicidade verdadeira.",
+  "Te amo mais do que as palavras podem expressar. Você é minha alma gêmea.",
+  "Sempre que penso em você, meu coração se enche de alegria.",
+  "Meu amor por você é tão grande que não cabe em palavras, mas se resume a uma palavra: eterno.",
+  "Você é tudo o que sempre sonhei e mais um pouco.",
+  "Te amo em todos os momentos, em todas as formas, em todas as maneiras.",
+  "Não há nada mais bonito do que estar ao seu lado.",
+  "Quando estou com você, o mundo ao redor desaparece. Só nós dois existem.",
+  "Seu sorriso é a razão do meu sorriso.",
+  "Você é a melhor parte do meu dia, todos os dias.",
+  "Te amo mais do que qualquer coisa que eu já tenha conhecido.",
+  "Eu escolheria você, todas as vezes, em todas as vidas.",
+  "Com você, encontrei um lar no seu coração.",
+  "Amo a maneira como você vê o mundo, e o melhor é que compartilha isso comigo.",
+  "Cada dia ao seu lado é um novo capítulo no livro da nossa vida.",
+  "Meu amor por você é uma chama que nunca se apaga.",
+  "Você me faz sentir que sou a pessoa mais feliz do mundo.",
+  "Em você, encontrei minha paz, minha felicidade e meu lar.",
+  "Eu só preciso de você. Sempre foi assim, sempre será assim.",
+  "Você é a razão pela qual eu acredito no destino."
 ];
 
-const loveButton = document.getElementById('love-button');
-const loveMessage = document.getElementById('love-message');
+function generateMessage() {
+  const randomIndex = Math.floor(Math.random() * messages.length);
+  const message = messages[randomIndex];
 
-loveButton.addEventListener('click', () => {
-  const randomIndex = Math.floor(Math.random() * phrases.length);
-  loveMessage.textContent = phrases[randomIndex];
-});
+  const messageDiv = document.getElementById("love-message");
+  messageDiv.textContent = message;
+  messageDiv.style.display = "block"; // Exibe a mensagem
+}
