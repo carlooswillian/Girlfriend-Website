@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,45 +8,62 @@
 </head>
 <body>
   <header>
-    <h1>Te amo Vidinha</h1>
+    Te amo Vidinha
   </header>
 
-  <section id="carousel">
+  <!-- Carrossel de Imagens -->
+  <div id="carousel">
     <div class="carousel">
-      <button class="arrow left">&lt;</button>
       <div class="carousel-images">
-        <img src="foto1.jpg" alt="Foto 1">
-        <img src="foto2.jpg" alt="Foto 2">
-        <img src="foto3.jpg" alt="Foto 3">
-        <img src="foto4.jpg" alt="Foto 4">
-        <img src="foto5.jpg" alt="Foto 5">
-        <img src="foto6.jpg" alt="Foto 6">
-        <img src="foto7.jpg" alt="Foto 7">
+        <img src="image1.jpg" alt="Imagem 1">
+        <img src="image2.jpg" alt="Imagem 2">
+        <img src="image3.jpg" alt="Imagem 3">
+        <img src="image4.jpg" alt="Imagem 4">
+        <img src="image5.jpg" alt="Imagem 5">
+        <img src="image6.jpg" alt="Imagem 6">
+        <img src="image7.jpg" alt="Imagem 7">
       </div>
-      <button class="arrow right">&gt;</button>
+      <button class="arrow left" onclick="prevImage()">&#10094;</button>
+      <button class="arrow right" onclick="nextImage()">&#10095;</button>
     </div>
-    <div class="dots"></div>
-  </section>
+    <div class="dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
 
-  <section id="romantic-text">
-    <p>
-      Minha vidinha, cada segundo ao seu lado faz meu coração bater mais forte. 
-      Você é o motivo dos meus sorrisos e a inspiração para todos os meus sonhos. 
-      Não existe nada neste mundo que eu não faria para te fazer feliz.
-    </p>
-  </section>
+  <!-- Texto Romântico -->
+  <div id="romantic-text">
+    <p>Você é a razão do meu sorriso todos os dias. Cada momento ao seu lado é um presente que a vida me deu. Te amo mais do que palavras podem expressar.</p>
+  </div>
 
-  <section id="video">
+  <!-- Vídeo -->
+  <div id="video">
     <video autoplay loop muted>
       <source src="video.mp4" type="video/mp4">
-      Seu navegador não suporta a reprodução de vídeos.
+      Seu navegador não suporta vídeos.
     </video>
-  </section>
+  </div>
 
-  <section id="button-section">
-    <button id="love-button">Aperte quando estiver triste.</button>
-    <p id="love-message"></p>
-  </section>
+  <!-- Botão de Mensagens -->
+  <div id="button-section">
+    <button id="love-button" onclick="generateMessage()">Aperte quando estiver triste</button>
+  </div>
+
+  <!-- Área para a Mensagem -->
+  <div id="love-message">
+    Mensagem gerada aqui.
+  </div>
+
+  <!-- Rodapé -->
+  <footer>
+    Você será pra sempre minha princesa
+  </footer>
 
   <script src="script.js"></script>
 </body>
