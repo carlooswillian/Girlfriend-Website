@@ -47,14 +47,25 @@ const messages = [
   "Você me faz sentir que sou a pessoa mais feliz do mundo.",
   "Em você, encontrei minha paz, minha felicidade e meu lar.",
   "Eu só preciso de você. Sempre foi assim, sempre será assim.",
-  "Você é a razão pela qual eu acredito no destino."
+  "Você me faz sentir que posso conquistar o mundo, desde que esteja ao seu lado."
 ];
 
 function generateMessage() {
-  const randomIndex = Math.floor(Math.random() * messages.length);
-  const message = messages[randomIndex];
+  const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+  document.getElementById('love-message').textContent = randomMessage;
+  document.getElementById('love-message').style.display = 'block';
+}
 
-  const messageDiv = document.getElementById("love-message");
-  messageDiv.textContent = message;
-  messageDiv.style.display = "block"; // Exibe a mensagem
+// Controle de Áudio
+const audio = document.getElementById('background-music');
+const audioToggle = document.getElementById('audio-toggle');
+
+function toggleAudio() {
+  if (audio.paused) {
+    audio.play();
+    audioToggle.textContent = "Pausar música";
+  } else {
+    audio.pause();
+    audioToggle.textContent = "Reproduzir música";
+  }
 }
