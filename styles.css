@@ -1,72 +1,57 @@
-/* Geral */
+/* Estilos Gerais */
 body {
-  font-family: 'Georgia', serif;
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f0e3;
+  color: #4a4a4a;
   margin: 0;
   padding: 0;
-  background: linear-gradient(to bottom, #fdf6f0, #f7e4d7);
-  color: #5a4e48;
   text-align: center;
 }
 
 header {
-  background: #e8d5c9;
-  padding: 20px;
-  color: #5a4e48;
-  font-size: 28px;
-  font-weight: bold;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-}
-
-h1 {
-  margin: 0;
+  background-color: #d4bfb1;
+  padding: 20px 0;
+  font-size: 2em;
+  font-family: 'Georgia', serif;
+  letter-spacing: 2px;
 }
 
 #carousel {
   position: relative;
+  width: 100%;
+  max-width: 700px;
   margin: 30px auto;
-  max-width: 90%;
-}
-
-.carousel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
-  position: relative;
-  border-radius: 10px;
 }
 
 .carousel-images {
   display: flex;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.5s ease;
 }
 
 .carousel-images img {
-  max-width: 100%;
-  flex: 0 0 100%;
-  object-fit: cover;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: auto;
+  max-height: 450px;
 }
 
 .arrow {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  color: #8c776c;
-  z-index: 10;
+  font-size: 30px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  cursor: pointer;
+  padding: 10px;
 }
 
-.left {
+.arrow.left {
   left: 10px;
 }
 
-.right {
+.arrow.right {
   right: 10px;
 }
 
@@ -75,36 +60,40 @@ h1 {
 }
 
 .dot {
-  display: inline-block;
-  width: 10px;
   height: 10px;
+  width: 10px;
   margin: 0 5px;
-  background: #d4bfb1;
+  background-color: #bbb;
   border-radius: 50%;
-  transition: background 0.3s;
+  display: inline-block;
+  transition: background-color 0.3s;
 }
 
 .dot.active {
-  background: #8c776c;
+  background-color: #717171;
 }
 
 #romantic-text p {
-  font-size: 20px;
-  margin: 30px 20px;
-  line-height: 1.6;
-  font-style: italic;
+  font-size: 1.2em;
+  font-weight: 300;
+  margin: 20px 0;
+  color: #5a4e48;
 }
 
-#video video {
-  width: 90%;
-  max-width: 320px;
-  border-radius: 10px;
-  margin: 20px auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+#video {
+  margin: 30px 0;
 }
 
-#button-section {
-  margin: 40px 0;
+video {
+  width: 100%;
+  max-width: 700px;
+}
+
+#love-message {
+  font-size: 1.5em;
+  color: #d4bfb1;
+  margin: 20px 0;
+  display: none;
 }
 
 #love-button {
@@ -125,30 +114,34 @@ h1 {
   color: #fff;
 }
 
-/* Mensagens */
-#love-message {
-  margin-top: 20px;
-  font-size: 20px;
-  font-weight: bold;
-  color: #5a4e48;
-  font-family: 'Georgia', serif;
-  max-width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 20px;
-  background: #f7e4d7;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  display: none; /* Inicialmente escondido */
+/* Estilos para o controle de música */
+#music-control {
+  margin-top: 30px;
 }
 
-/* Rodapé */
-footer {
-  margin-top: 50px;
-  padding: 10px;
-  background: #e8d5c9;
-  font-size: 18px;
+#audio-toggle {
+  background: #d4bfb1;
   color: #5a4e48;
-  font-weight: bold;
-  text-transform: uppercase;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-family: 'Georgia', serif;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+#audio-toggle:hover {
+  background: #8c776c;
+  color: #fff;
+}
+
+footer {
+  background-color: #d4bfb1;
+  padding: 15px;
+  font-size: 1.2em;
+  font-family: 'Georgia', serif;
+  letter-spacing: 1px;
+  margin-top: 30px;
 }
