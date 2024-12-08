@@ -1,36 +1,120 @@
+/* Geral */
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to bottom, #ffe6e6, #ff9999);
+  color: #333;
+  text-align: center;
 }
 
-.page {
-    text-align: center;
+header {
+  background: #ff4d4d;
+  padding: 20px;
+  color: white;
+  font-size: 24px;
 }
 
-.hidden {
-    display: none;
+h1 {
+  margin: 0;
 }
 
-button {
-    padding: 10px 20px;
-    font-size: 18px;
-    margin-top: 20px;
+#carousel {
+  position: relative;
+  margin: 20px 0;
 }
 
-#cameraContainer {
-    margin-top: 20px;
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
 }
 
-video {
-    width: 100%;
-    max-width: 400px;
-    height: auto;
-    border: 2px solid #000;
-    display: block;
+.carousel-images {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-images img {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 10px;
+}
+
+.arrow {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ff4d4d;
+}
+
+.left {
+  left: 10px;
+}
+
+.right {
+  right: 10px;
+}
+
+.dots {
+  margin-top: 10px;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  background: #ddd;
+  border-radius: 50%;
+}
+
+.dot.active {
+  background: #ff4d4d;
+}
+
+#romantic-text p {
+  font-size: 18px;
+  margin: 20px 10px;
+}
+
+#video video {
+  width: 90%;
+  max-width: 300px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+#button-section {
+  margin: 20px;
+}
+
+#love-button {
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#love-button:hover {
+  background: #e63939;
+}
+
+#love-message {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
 }
