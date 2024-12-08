@@ -125,10 +125,30 @@ h1 {
   color: #fff;
 }
 
+/* Mensagens */
 #love-message {
   margin-top: 20px;
   font-size: 20px;
   font-weight: bold;
   color: #5a4e48;
   font-family: 'Georgia', serif;
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  background: #f7e4d7;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: none; /* Inicialmente escondido */
+}
+
+/* Rodapé */
+footer {
+  margin-top: 50px;
+  padding: 10px;
+  background: #e8d5c9;
+  font-size: 18px;
+  color: #5a4e48;
+  font-weight: bold;
+  text-transform: uppercase;
 }
