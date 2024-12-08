@@ -1,112 +1,75 @@
-let currentPhase = 0;
+// Controle do carrossel
+const images = document.querySelector('.carousel-images');
+const dotsContainer = document.querySelector('.dots');
+const imageCount = images.children.length;
 
-const phases = [
-    {
-        clue: "Neles estão muitas lembranças que tivemos, momentos marcantes que amei viver com você.",
-        objects: ['book', 'photo album', 'notebook'], // Palavras-chave para os objetos a serem detectados
-        surprise: 'video', // Surpresa: Vídeo
-    },
-    {
-        clue: "Eu amo sempre estar com você, passamos nosso tempo de qualidade usando este objeto.",
-        objects: ['tv', 'monitor'],
-        surprise: 'audio',
-    },
-    {
-        clue: "Você sabe que mora no meu coração, com este objeto você não abre meu coração mas é usado para abrir.",
-        objects: ['key', 'keys'],
-        surprise: 'photo',
-    }
+// Criar os pontos dinamicamente
+dotsContainer.innerHTML = '';
+for (let i = 0; i < imageCount; i++) {
+  const dot = document.createElement('span');
+  dot.classList.add('dot');
+  if (i === 0) dot.classList.add('active');
+  dotsContainer.appendChild(dot);
+}
+
+const dots = document.querySelectorAll('.dot');
+let currentIndex = 0;
+
+document.querySelector('.left').addEventListener('click', () => {
+  currentIndex = (currentIndex > 0) ? currentIndex - 1 : imageCount - 1;
+  updateCarousel();
+});
+
+document.querySelector('.right').addEventListener('click', () => {
+  currentIndex = (currentIndex < imageCount - 1) ? currentIndex + 1 : 0;
+  updateCarousel();
+});
+
+function updateCarousel() {
+  images.style.transform = `translateX(-${currentIndex * 100}%)`;
+  dots.forEach((dot, index) => {
+    dot.classList.toggle('active', index === currentIndex);
+  });
+}
+
+// Frases de amor
+const phrases = [
+  "Seu sorriso é o mais lindo que já vi.",
+  "Amo como você ilumina meu dia.",
+  "Você é minha melhor escolha.",
+  "Admiro sua força e determinação.",
+  "Cada momento ao seu lado é mágico.",
+  "Você é a razão do meu viver.",
+  "Amo como você me faz rir.",
+  "Você é meu lugar seguro.",
+  "Seu olhar me dá paz.",
+  "Não há ninguém como você.",
+  "Amo como você cuida de mim.",
+  "Seu amor é tudo que preciso.",
+  "Você é minha melhor amiga e amor.",
+  "Seu abraço é meu refúgio.",
+  "Adoro ouvir sua voz.",
+  "Você é minha inspiração diária.",
+  "Seu carinho é único.",
+  "Amo nossas aventuras juntos.",
+  "Você é linda por dentro e por fora.",
+  "Você é meu mundo inteiro.",
+  "Seu amor é minha maior benção.",
+  "Amo sua risada contagiante.",
+  "Você me completa.",
+  "Sou eternamente grato por você.",
+  "Você é meu anjo na terra.",
+  "Seu toque me acalma.",
+  "Você é meu sonho realizado.",
+  "Amo nossa conexão especial.",
+  "Você é minha razão para acreditar no amor.",
+  "Te amo mais do que palavras podem expressar."
 ];
 
-const startButton = document.getElementById('startButton');
-const scanButton = document.getElementById('scanButton');
-const clueElement = document.getElementById('clue');
-const cameraContainer = document.getElementById('cameraContainer');
-const feedbackElement = document.getElementById('feedback');
-const camera = document.getElementById('camera');
+const loveButton = document.getElementById('love-button');
+const loveMessage = document.getElementById('love-message');
 
-// Inicia o jogo
-startButton.addEventListener('click', () => {
-    document.getElementById('intro').classList.add('hidden');
-    loadPhase();
+loveButton.addEventListener('click', () => {
+  const randomIndex = Math.floor(Math.random() * phrases.length);
+  loveMessage.textContent = phrases[randomIndex];
 });
-
-// Carrega a fase atual
-function loadPhase() {
-    document.getElementById('game').classList.remove('hidden');
-    clueElement.innerText = phases[currentPhase].clue;
-}
-
-// Inicia a câmera e o TensorFlow.js
-scanButton.addEventListener('click', () => {
-    cameraContainer.classList.remove('hidden');
-    startCamera();
-});
-
-// Configura a câmera
-async function startCamera() {
-    const stream = await navigator.mediaDevices.getUserMedia({
-        video: {
-            facingMode: { exact: 'environment' } // Use a câmera traseira
-        }
-    });
-    camera.srcObject = stream;
-
-    // Inicializa o modelo do TensorFlow.js
-    const model = await loadModel();
-    detectObject(model);
-}
-
-// Carrega o modelo TensorFlow.js
-async function loadModel() {
-    const modelURL = 'https://path-to-your-tensorflow-model/model.json';
-    const model = await tf.loadGraphModel(modelURL);
-    return model;
-}
-
-// Detecta o objeto
-async function detectObject(model) {
-    const predictions = await model.detect(camera);
-    
-    predictions.forEach(prediction => {
-        const detectedObject = prediction.class; // Classe detectada
-
-        if (phases[currentPhase].objects.includes(detectedObject.toLowerCase())) {
-            feedbackElement.innerText = 'Objeto detectado!';
-            showSurprise();
-        } else {
-            feedbackElement.innerText = 'Objeto não detectado, tente novamente.';
-        }
-    });
-}
-
-// Exibe a surpresa da fase
-function showSurprise() {
-    cameraContainer.classList.add('hidden');
-
-    const surprise = phases[currentPhase].surprise;
-
-    if (surprise === 'video') {
-        window.location.href = 'video1.mp4'; // Link do vídeo
-    } else if (surprise === 'audio') {
-        window.location.href = 'audio1.mp3'; // Link do áudio
-    } else if (surprise === 'photo') {
-        window.location.href = 'photo1.jpg'; // Link da foto
-    }
-
-    currentPhase++;
-    if (currentPhase < phases.length) {
-        loadPhase();
-    } else {
-        showFinalMessage();
-    }
-}
-
-// Exibe a mensagem final após todas as fases
-function showFinalMessage() {
-    document.getElementById('game').innerHTML = `
-        <h2>Parabéns! Você completou o caça ao tesouro!</h2>
-        <p>Te amo mais do que as palavras podem expressar. Você é o meu tesouro.</p>
-        <button onclick="window.location.reload()">Jogar novamente</button>
-    `;
-}
