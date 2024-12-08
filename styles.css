@@ -1,18 +1,21 @@
 /* Geral */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Georgia', serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(to bottom, #ffe6e6, #ff9999);
-  color: #333;
+  background: linear-gradient(to bottom, #fdf6f0, #f7e4d7);
+  color: #5a4e48;
   text-align: center;
 }
 
 header {
-  background: #ff4d4d;
+  background: #e8d5c9;
   padding: 20px;
-  color: white;
-  font-size: 24px;
+  color: #5a4e48;
+  font-size: 28px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
 }
 
 h1 {
@@ -21,7 +24,8 @@ h1 {
 
 #carousel {
   position: relative;
-  margin: 20px 0;
+  margin: 30px auto;
+  max-width: 90%;
 }
 
 .carousel {
@@ -30,8 +34,6 @@ h1 {
   justify-content: center;
   overflow: hidden;
   position: relative;
-  width: 90%;
-  margin: 0 auto;
   border-radius: 10px;
 }
 
@@ -45,6 +47,7 @@ h1 {
   flex: 0 0 100%;
   object-fit: cover;
   border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .arrow {
@@ -55,7 +58,7 @@ h1 {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  color: #ff4d4d;
+  color: #8c776c;
   z-index: 10;
 }
 
@@ -76,48 +79,56 @@ h1 {
   width: 10px;
   height: 10px;
   margin: 0 5px;
-  background: #ddd;
+  background: #d4bfb1;
   border-radius: 50%;
+  transition: background 0.3s;
 }
 
 .dot.active {
-  background: #ff4d4d;
+  background: #8c776c;
 }
 
 #romantic-text p {
-  font-size: 18px;
-  margin: 20px 10px;
+  font-size: 20px;
+  margin: 30px 20px;
+  line-height: 1.6;
+  font-style: italic;
 }
 
 #video video {
   width: 90%;
-  max-width: 300px;
+  max-width: 320px;
   border-radius: 10px;
-  margin: 20px 0;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #button-section {
-  margin: 20px;
+  margin: 40px 0;
 }
 
 #love-button {
-  background: #ff4d4d;
-  color: white;
+  background: #d4bfb1;
+  color: #5a4e48;
   border: none;
   padding: 15px 30px;
-  font-size: 16px;
+  font-size: 18px;
   border-radius: 30px;
   cursor: pointer;
-  transition: background 0.3s;
+  font-family: 'Georgia', serif;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
 }
 
 #love-button:hover {
-  background: #e63939;
+  background: #8c776c;
+  color: #fff;
 }
 
 #love-message {
   margin-top: 20px;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
-  color: #333;
+  color: #5a4e48;
+  font-family: 'Georgia', serif;
 }
